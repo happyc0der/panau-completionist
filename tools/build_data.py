@@ -9,7 +9,7 @@ What it builds:
   targets.json.gz       collectibles: groups with a CResourceItem "rei.<kind>BoostPickup" and a "dit.tin" pickup trigger
                         sabotage targets: groups whose CTargetIndicator carries an "act_<kind>_tin_txt" display text
                         (the game's own objective list), minus 9 undestroyable props (no damage component), a
-                        mission's own props (enabled only during it) and outpost dfd38's 4 untracked fuel depots
+                        mission's own props (enabled only during it) and the 8 untracked fuel depots of outposts dfd38 and dfd94
                         (neither is ever in the game's progress table), plus
                         propaganda trailer spawn points and pipelines (sabotaged at a control panel)
                         ignored: parked helicopters (GB017b cockpits), which carry a marker but should not get arrows
@@ -52,9 +52,11 @@ ITEM_KINDS = {'weapon': 'weapon part', 'vehicle': 'vehicle part', 'armor': 'armo
 DAMAGE = {'CDamageControl', 'CDamageableObject', 'CSAMSite'}
 # objectives that look like sabotage targets but never count (the game never puts them in its progress table):
 MISSION_ONLY = re.compile(r'\.specifics\.enable\b|\bmsy\.mission\.fail\b')       # a mission's own props
-# the four fuel depots of outpost dfd38: no settlement counter, and in no save's progress table (every other fuel
-# depot in the game is, standing or destroyed), so they reset; nothing in the data tells them from dfd14's, which count
-UNTRACKED = {0x92c5e845, 0x2beeb995, 0xd021adea, 0x3735aee0}
+# the fuel depots of outposts dfd38 and dfd94: in no save's progress table (every other fuel depot in the game is,
+# standing or destroyed) and no objective marker even 23 m away (seen in game 2026-10-30), so not objectives; nothing
+# in the data tells them from dfd14's, which count (dfd94's even name settlement 35x36's counter)
+UNTRACKED = {0x92c5e845, 0x2beeb995, 0xd021adea, 0x3735aee0,             # dfd38
+             0x9bba5b98, 0xf4a650eb, 0xc7bbd815, 0xa11b7683}             # dfd94
 
 
 # --- archives ------------------------------------------------------------------------------------------------------

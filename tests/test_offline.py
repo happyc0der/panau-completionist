@@ -10,6 +10,32 @@ from panau.save import world
 from panau.save.format import EMPTY_KEY, WORLD_SLOTS
 
 
+class Inactive(unittest.TestCase):
+    """Overlay.check_inactive: a target next to you with no game marker and no progress entries is hidden after 3 s."""
+    def test_rule(self):
+        import time
+        import types
+        from panau.overlay import Overlay
+        far, near = ('sabotage', 'fuel depot', 1, (0, 0, 0)), ('sabotage', 'fuel depot', 2, (0, 0, 0))
+        marked, pipe = ('sabotage', 'generator', 3, (0, 0, 0)), ('sabotage', 'pipeline', 4, (0, 0, 0))
+        tracked = ('sabotage', 'water tower', 5, (0, 0, 0))
+        pr = types.SimpleNamespace(inactive=set(), g_slots={5: [0]})
+        logged = []
+        o = types.SimpleNamespace(progress=pr, state={'poi_targets': [(200, far), (20, near), (20, marked), (20, pipe),
+                                                                      (20, tracked)]}, log=logged.append)
+        raw = [(3, 0x11, True, (0, 0, 0)), (99, 0x11, True, (0, 0, 0))]
+        Overlay.check_inactive(o, raw)
+        self.assertEqual(pr.inactive, set())                         # not before 3 s
+        o.state['unmarked'] = {g: time.time() - 4 for g in o.state['unmarked']}
+        Overlay.check_inactive(o, raw)
+        self.assertEqual(pr.inactive, {2})                           # only the unmarked, untracked one close by
+        self.assertEqual(len(logged), 1)
+        Overlay.check_inactive(o, raw + [(2, 0x11, True, (0, 0, 0))])
+        self.assertEqual(pr.inactive, set())                         # its marker showed up: back
+        Overlay.check_inactive(o, [])
+        self.assertEqual(pr.inactive, set())                         # no markers loaded at all: never decide
+
+
 class Hashing(unittest.TestCase):
     def test_known_values(self):
         self.assertEqual(hashlittle(b''), 0xDEADBEEF)

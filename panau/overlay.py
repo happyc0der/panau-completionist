@@ -189,7 +189,8 @@ class Overlay:
         x, z = cam[3][0], cam[3][2]
         raw = pr.markers()
         pr.vanished(raw, cam[3])
-        targets =[(d, t) for d, t in st['poi_targets'] if t[2] not in pr.live_destroyed]
+        self.check_inactive(raw)
+        targets = [(d, t) for d, t in st['poi_targets'] if t[2] not in pr.live_destroyed and t[2] not in pr.inactive]
         shown = [t[3] for _, t in targets]
         for g, typ, standing, q in raw:                     # pickups the data doesn't know (never sabotage: props)
             old = st['last_pos'].get(g); st['last_pos'][g] = q
@@ -212,6 +213,35 @@ class Overlay:
         if key != st.get('tkey'):                           # contents changed: redraw even if the camera didn't move
             st['tkey'] = key; st['tver'] += 1
         st['targets'] = targets
+
+    def check_inactive(self, raw):
+        """A sabotage target the game has no marker for although you are within 60 m of it (and the game has others
+        loaded), and that its progress table has never heard of, is not an objective right now: a mission's prop, an
+        inactive outpost. After 3 s its arrow goes (and is logged); a marker showing up brings it back. Pipelines are
+        exempt: their marker sits on the control panel, not on the pipeline."""
+        pr, st, now = self.progress, self.state, time.time()
+        have = {g for g, *_ in raw}
+        pr.inactive -= have
+        if not raw:
+            return
+        unmarked = st.setdefault('unmarked', {})
+        for d, t in st['poi_targets']:
+            g = t[2]
+            if t[0] != 'sabotage' or t[1] == 'pipeline' or g in have or g in pr.g_slots or d >= 60:
+                unmarked.pop(g, None)
+                continue
+            if now - unmarked.setdefault(g, now) > 3 and g not in pr.inactive:
+                pr.inactive.add(g)
+                self.log(f'{t[1]} {g:08x} at {[round(v) for v in t[3]]}: no game marker next to it and no progress '
+                         f'entries, hidden as not an objective')
+
+    def log(self, line):
+        try:
+            os.makedirs(config.DIR, exist_ok=True)
+            with open(os.path.join(config.DIR, 'audit.log'), 'a', encoding='utf-8') as f:
+                f.write(f'{time.strftime("%Y-%m-%d %H:%M:%S")} {line}\n')
+        except OSError:
+            pass
 
     def audit(self, raw):
         """Self-check, logged to %APPDATA%\\panau-completionist\\audit.log: a target the game's marker says is

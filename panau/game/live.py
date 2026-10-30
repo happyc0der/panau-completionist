@@ -70,6 +70,7 @@ class Progress:
         self.collected, self.sam_done = set(), set()       # from the save
         self.done_groups = set()                           # from the progress table (save, then live)
         self.live_collected, self.live_destroyed = set(), set()
+        self.inactive = set()                              # not objectives right now (see Overlay.check_inactive)
         self.alive_pos, self.panels_prev, self.panels_now = {}, {}, {}
         self.save_keys = self.save_bits = None
         self.stamp, self.next_save, self.parsing = None, 0.0, False
@@ -253,7 +254,7 @@ class Progress:
         kind, label, g, _ = target
         if kind == 'item':
             return g not in self.collected and g not in self.done_groups and g not in self.live_collected
-        if g in self.done_groups or g in self.live_destroyed:
+        if g in self.done_groups or g in self.live_destroyed or g in self.inactive:
             return False
         if label == 'SAM site':
             return g not in self.sam_done
