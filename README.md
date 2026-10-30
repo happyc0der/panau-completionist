@@ -28,7 +28,7 @@ Then run `panau`. It shows what it found: the game folder, your save folder, you
 unlock is earned.
 
 ```text
-panau-completionist 1.1.0
+panau-completionist 1.2.0
   game       D:\SteamLibrary\steamapps\common\Just Cause 2
   saves      C:\Program Files (x86)\Steam\userdata\<id>\8190\remote
   save       JustCause2Save00.sav: Hardcore, story finished, 1306 collectibles
@@ -74,12 +74,20 @@ Your saves live in `Steam\userdata\<id>\8190\remote`. Save00 is the autosave (**
 
 What comes over: collectibles, destroyed objects (all 3,559 sabotage targets the game tracks), SAM sites,
 settlement counters and discovery, races and other activities (best times too), faction items (skulls, black
-boxes, drug drops; their counters are recounted), stats, black market unlocks and the higher difficulty.
+boxes, drug drops), stats, black market unlocks and the higher difficulty. The counters the game shows but never
+recounts (faction items, locations discovered) are recounted for the merged result. Missions and faction progress
+stay the base's; `--take-missions` merges them too (experimental, not verified in game).
 
-**Merged with 1.0?** It took the larger of the two saves' faction item counters instead of counting both, so the
-game can show a few faction items missing that never appear on the map (they are already picked up). Close the
-game and run `panau repair` (dry run) and `panau repair --write` to recount them. Missions and faction progress stay the base's; `--take-missions` merges them too
-(experimental, not verified in game).
+**Merged with 1.0?** It took the larger of the two saves' faction item and locations-discovered counters instead of
+counting both, so the game can show a few faction items or locations missing that never appear on the map (they are
+already picked up or discovered). Close the game, then:
+
+```bash
+panau repair --originals base.sav other.sav          # dry run: shows what it would change
+panau repair --originals base.sav other.sav --write  # fixes your newest save (once; a second run skips it)
+```
+
+`--originals` are the two saves you merged; without them only the faction item counters are fixed.
 
 ## Wingsuit
 

@@ -2,6 +2,7 @@
 import argparse
 import os
 import shutil
+import struct
 import sys
 import time
 
@@ -84,15 +85,45 @@ def cmd_audit(a):
     return 0 if not misses and not diffs and not wrong else 1
 
 
+def _missed_discoveries(base_path, other_path):
+    """How far a 1.0 merge of these two saves left the locations-discovered counter short: it took the larger of the
+    two counters instead of recounting the merged discovery flags."""
+    from panau.save import merge
+    from panau.save.format import Save, u32
+    base, other = Save.load(base_path), Save.load(other_path)
+    should, _ = merge.discovered_count(base, other)
+    return max(0, should - max(u32(dict(s['stats'])[merge.DISCOVERED]) for s in (base, other)))
+
+
 def cmd_repair(a):
+    import json
     from panau.game.memory import find_pid
-    from panau.save import progress
+    from panau.save import merge, progress
     from panau.save.format import Save, u32
     path = a.save or steam.newest_save()
     s = Save.load(path)
     fixes = progress.fix_faction_counters(s)
     print(f'{path}: faction item counters (stat: now -> should be):',
           ', '.join(f'{k}: {old} -> {new}' for k, (old, new) in fixes.items()) or 'all correct')
+    log_path, key = os.path.join(config.DIR, 'repairs.json'), os.path.normcase(os.path.abspath(path))
+    try:
+        with open(log_path, encoding='utf-8') as f:
+            log = json.load(f)
+    except (OSError, ValueError):
+        log = {}
+    add = 0
+    if a.originals:
+        add = _missed_discoveries(*a.originals)
+        if add and log.get(key, {}).get('discovered'):
+            print(f'locations discovered: +{add} was already applied to this file ({log_path}); skipped')
+            add = 0
+        elif add:
+            stats = dict(s['stats'])
+            old = u32(stats[merge.DISCOVERED])
+            s['stats'] = [(k, struct.pack('<I', old + add) if k == merge.DISCOVERED else d) for k, d in s['stats']]
+            fixes[merge.DISCOVERED] = (old, old + add)
+        print(f'locations discovered (stat {merge.DISCOVERED}): ' +
+              (f'{fixes[merge.DISCOVERED][0]} -> {fixes[merge.DISCOVERED][1]}' if add else 'nothing to add'))
     if not fixes or not a.write:
         if fixes:
             print('(dry run: nothing written; pass --write to fix the file)')
@@ -104,6 +135,11 @@ def cmd_repair(a):
     kept = _backup_once(path)
     with open(path, 'wb') as f:
         f.write(out)
+    if add:
+        log[key] = {'discovered': add, 'when': time.strftime('%Y-%m-%d %H:%M')}
+        os.makedirs(config.DIR, exist_ok=True)
+        with open(log_path, 'w', encoding='utf-8') as f:
+            json.dump(log, f, indent=2)
     print(f'written: {path}' + (f' (the previous file is kept at {kept})' if kept else ''))
     return 0
 
@@ -190,8 +226,11 @@ def main(argv=None):
     au.add_argument('others', nargs='+', help='the original saves')
     au.add_argument('--save', help='the save to check (default: your newest)')
     au.set_defaults(fn=cmd_audit)
-    r = sub.add_parser('repair', help='fix counters a 1.0 merge got wrong (faction items); dry run unless --write')
+    r = sub.add_parser('repair', help='fix counters a 1.0 merge got wrong (faction items, locations discovered); '
+                                      'dry run unless --write')
     r.add_argument('--save', help='the save to fix (default: your newest)')
+    r.add_argument('--originals', nargs=2, metavar=('BASE', 'OTHER'),
+                   help='the two saves that were merged: also credits the locations only OTHER had discovered')
     r.add_argument('--write', action='store_true', help='write the fix into the file (the game must be closed)')
     r.set_defaults(fn=cmd_repair)
     o = sub.add_parser('overlay', help='on-screen arrows (the game must be running)')

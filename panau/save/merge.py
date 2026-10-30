@@ -10,6 +10,7 @@ What is merged (each step was verified in game: the game's next autosave kept it
   - location discovery flags, stats (records and counters), flags59, black market unlocks, activities (missions,
     races, stunts, faction items; best race times): the better of the two
   - faction item counters (stats 333-336, 370): recounted from the merged activity list
+  - the locations-discovered counter (stat 316): recounted for the merged discovery flags
   - difficulty: the higher of the two (or what you pass)
 Missions and faction progress stay the base's unless take_missions=True (implemented, but not verified in game:
 pick the save with the furthest story as the base).
@@ -25,6 +26,18 @@ from panau.save.format import Save, item_lists, u32
 
 RESOURCE_STATS = {'e1162daa': 326, 'e6fb1698': 327, '5353acb9': 328, 'f8fc3159': 329}   # item list 2 key -> stat
 RESOURCE_TOTAL = 331
+# locations discovered (of 368: the 360 in the save's location list + region titles); the game only ever adds 1 per
+# new discovery, so it must be recounted for the merged list (see discovered_count)
+DISCOVERED = 316
+
+
+def discovered_count(a, b):
+    """(stat 316 for a merge of saves a and b, locations only b had discovered). The counter = the discovered
+    locations in the list + the discovered region titles, and each save's counter minus its list is its titles; the
+    game never recounts either part."""
+    da, db = sections.discovered(a['locations']), sections.discovered(b['locations'])
+    titles = max(u32(dict(s['stats'])[DISCOVERED]) - len(d) for s, d in ((a, da), (b, db)))
+    return len(da | db) + max(0, titles), len(db - da)
 
 
 def settlement_cells():
@@ -64,6 +77,7 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
     for s in (other, base):
         kind.update({k[4:]: k[:4].hex() for k in item_lists(s['items'])[2]})
     plus = collections.Counter(kind.get(v[4:]) for v in add)
+    discovered, found = discovered_count(base, other)
     base_stats = dict(base['stats'])
     merged_stats = sections.merge_stats(base['stats'], other['stats'])
     out = []
@@ -73,8 +87,11 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
             v = struct.pack('<I', u32(base_stats[k]) + plus[t])
         elif k == RESOURCE_TOTAL:
             v = struct.pack('<I', u32(base_stats[k]) + sum(plus[t] for t in RESOURCE_STATS))
+        elif k == DISCOVERED:
+            v = struct.pack('<I', discovered)
         out.append((k, v))
     base['stats'] = out
+    report.append(f'locations discovered: {discovered} ({found} only in the other save)')
 
     # 4. SAM sites
     base['items'], sams = world.mark_sams(base['items'], world.sam_done(other['items']))

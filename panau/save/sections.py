@@ -81,6 +81,12 @@ def merge_unlocks(a, b):
     return out
 
 
+def discovered(locations):
+    """Location ids with the discovered flag set."""
+    d = dict(locations)
+    return {u32(d[1 + 4 * i]) for i in range(360) if d[3 + 4 * i][0]}
+
+
 def merge_location_flags(a, b):
     """360 x (id, counter, discovered, done) at idx 1+4i: the two flags OR'd. Counters are handled in merge.py
     (they must match the objects actually credited, not just a max)."""
