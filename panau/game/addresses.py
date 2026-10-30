@@ -13,6 +13,8 @@ SIGNATURES = [
     (0x005AB77C, bytes.fromhex('011548171901' '390d0c181901')),
     # CTargetIndicator constructor: add dword [0x1191258], 1 (objective marker count)
     (0x006C4688, bytes.fromhex('830558121901' '01')),
+    # IsBlackmarketActive worker: mov cl, [0x1197AC8] (black market open)
+    (0x00747687, bytes.fromhex('8a0dc87a1901')),
 ]
 
 # --- player (CCharacterManager singleton -> CPlayer -> CCharacter) --------------------------------------------------
@@ -42,9 +44,13 @@ PICKUP_NEXT, PICKUP_GROUP, PICKUP_COLLECTED = 0x40, 0x28, 0x44     # byte +0x44 
 MARKER_HEAD, MARKER_VTABLE = 0x011910A0, 0x00EB8FA4
 MARKER_NEXT, MARKER_GROUP, MARKER_STATUS, MARKER_TYPE, MARKER_POS = 0x40, 0x28, 0x4C, 0x50, 0xB4
 MARKER_SABOTAGE = 0x11                # status bit 0 = standing; it clears the instant the target is destroyed
-MARKER_PANEL = 0x15                   # interaction marker (pipeline control panels)
-MARKER_PANEL_USED = 0x13              # a pipeline panel's marker turns into this the moment it is sabotaged
+MARKER_PANEL = 0x15                   # interaction marker; a pipeline control panel's status bit 0 = still standing
 MARKER_ITEMS = {0x01: 'weapon part', 0x02: 'vehicle part', 0x0C: 'cash', 0x1D: 'armor'}
+
+# --- menus --------------------------------------------------------------------------------------------------------------
+# The pause menu and the map show a mouse cursor (play never does, see overlay.menu_open); the black market shows none,
+# but the game keeps this flag for it: the byte its own IsBlackmarketActive script function returns.
+BLACK_MARKET_OPEN = 0x01197AC8
 
 # --- the in-memory progress table (same layout as the save's world section) ---------------------------------------------
 WORLD_BITS_OFFSET = 190672            # the bit array follows the 23,833 x 8-byte keys at this distance

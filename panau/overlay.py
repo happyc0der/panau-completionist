@@ -41,6 +41,19 @@ def make_borderless():
         user32.SetWindowPos(hwnd, 0, 0, 0, user32.GetSystemMetrics(0), user32.GetSystemMetrics(1), 0x0020 | 0x0040)
 
 
+class CURSORINFO(ctypes.Structure):
+    _fields_ = [('cbSize', wt.DWORD), ('flags', wt.DWORD), ('hCursor', wt.HANDLE), ('pt', wt.POINT)]
+
+
+def menu_open(game):
+    """True while the pause menu, the map or the black market is open. The first two show a mouse cursor, which play
+    never does; the black market shows none but has a flag in the game."""
+    ci = CURSORINFO(cbSize=ctypes.sizeof(CURSORINFO))
+    if user32.GetCursorInfo(ctypes.byref(ci)) and ci.flags & 1:      # CURSOR_SHOWING
+        return True
+    return game.read(A.BLACK_MARKET_OPEN, 1) == bytes([1])
+
+
 def game_rect():
     """The game's client area on screen, or None while another window is in front."""
     h = game_window()
@@ -238,6 +251,8 @@ class Overlay:
             st['range'] = (st['range'] + 1) % len(self.ranges); st['range_msg'] = time.time()
         rng = self.ranges[st['range']]
         gr = game_rect()
+        if gr and menu_open(self.game):                     # nothing on top of the game's menus
+            gr = None
         cam = camera(self.game) if rng and gr else None
         msg = bool(gr) and time.time() - st.get('range_msg', 0) < 2
         sig = (rng, bool(gr), msg, st['tver'], len(self.progress.live_collected),
@@ -287,7 +302,7 @@ class Overlay:
     def draw_radar(self, cam):
         c, st, sc = self.radar_cv, self.state, self.scale
         c.delete('all')
-        if not st['radar'] or not cam or not game_rect():
+        if not st['radar'] or not cam or not game_rect() or menu_open(self.game):
             user32.ShowWindow(self.radar_hw, 0); return
         sw = user32.GetSystemMetrics(0)
         user32.SetWindowPos(self.radar_hw, 0, sw - self.rsize - int(60 * sc), int(60 * sc), 0, 0, SWP_MOVE_SHOW)

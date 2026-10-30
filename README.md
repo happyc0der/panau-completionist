@@ -120,8 +120,6 @@ It fixes the crash at `JustCause2.exe+0x209D00` (an access violation reading 0x2
 - After a merge, objects that came from the other save show their in-game objective marker as still standing (the game
   never refreshes it). The overlay goes by the save, so they get no arrow.
 - Faction items (skulls, black boxes) are not tracked: the game's own map already shows them.
-- Arrows stay on screen over the game's own menus (pause, map, black market). The game has no menu flag the
-  overlay can read reliably yet; one byte that looked like one turned out to be mouse data.
 
 ## For AI agents
 

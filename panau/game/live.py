@@ -12,8 +12,8 @@ Rules learned the hard way:
   - a marker saying "standing" never overrides the save: objects copied as destroyed by a save merge keep a stale
     "standing" marker forever.
   - SAM sites are tracked in the save's item lists, not the progress table (see save/world.py).
-  - pipelines are sabotaged at a control panel. Its marker turns from type 0x15 to 0x13 the moment the pipeline is
-    done, at any distance (seen 2026-10-30); a panel marker that disappears next to you counts too.
+  - pipelines are sabotaged at a control panel. Its marker's status bit 0 clears the moment the pipeline is done
+    (0x21 -> 0x20), like a sabotage marker's; a panel marker that disappears next to you counts too.
   - a sabotage marker that is not in the data is a prop or a mission marker, never a completion target.
 """
 import collections
@@ -207,6 +207,8 @@ class Progress:
             pos = struct.unpack_from('<3f', b, A.MARKER_POS)
             if g in self.panel_link:
                 panels[g] = (typ, pos)
+                if not b[A.MARKER_STATUS] & 1:
+                    self.live_destroyed.add(self.panel_link[g])
             if (typ == A.MARKER_SABOTAGE or typ in A.MARKER_ITEMS) and abs(pos[0]) < 17000 and abs(pos[2]) < 17000:
                 standing = bool(b[A.MARKER_STATUS] & 1)
                 if typ == A.MARKER_SABOTAGE and not standing:
@@ -218,14 +220,12 @@ class Progress:
 
     def vanished(self, markers, cam_pos):
         """Markers that disappear next to you (within 120 m; the game unloads them only far away) were destroyed:
-        standing sabotage markers, and pipeline control panels. A panel that turns from 0x15 to 0x13 was used,
-        wherever you are."""
+        standing sabotage markers, and pipeline control panels."""
         if not markers:                                    # a load or a menu, not destruction
             return
         near = lambda q: math.hypot(q[0] - cam_pos[0], q[2] - cam_pos[2]) < 120
         for g, (typ, q) in self.panels_prev.items():
-            now = self.panels_now.get(g)
-            if typ == A.MARKER_PANEL and (now[0] == A.MARKER_PANEL_USED if now else near(q)):
+            if typ == A.MARKER_PANEL and g not in self.panels_now and near(q):
                 self.live_destroyed.add(self.panel_link[g])
         now = {g: q for g, typ, standing, q in markers if typ == A.MARKER_SABOTAGE and standing}
         for g, q in self.alive_pos.items():
