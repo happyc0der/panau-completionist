@@ -28,7 +28,7 @@ Then run `panau`. It shows what it found: the game folder, your save folder, you
 unlock is earned.
 
 ```text
-panau-completionist 1.2.2
+panau-completionist 1.3.0
   game       D:\SteamLibrary\steamapps\common\Just Cause 2
   saves      C:\Program Files (x86)\Steam\userdata\<id>\8190\remote
   save       JustCause2Save00.sav: Hardcore, story finished, 1306 collectibles
@@ -69,25 +69,29 @@ Your saves live in `Steam\userdata\<id>\8190\remote`. Save00 is the autosave (**
    Whatever was in that slot is kept once in `%APPDATA%\panau-completionist\backups`.
 4. Load it in game. The game rewrites the autosave right after loading; if it didn't like something it resets
    the save there, so check your % and collectible count look right.
-5. `panau audit base.sav other.sav` confirms the result holds everything both had, and that its counters agree
-   with what it records as done.
+5. `panau audit base.sav other.sav` confirms the result holds everything both had, and that none of its tallies is
+   short of what it records as done.
 
-What comes over: collectibles, destroyed objects (all 3,554 sabotage targets the game tracks), SAM sites,
-settlement counters and discovery, races and other activities (best times too), faction items (skulls, black
-boxes, drug drops), stats, black market unlocks and the higher difficulty. The counters the game shows but never
-recounts (faction items, locations discovered) are recounted for the merged result. Missions and faction progress
-stay the base's; `--take-missions` merges them too (experimental, not verified in game).
+What comes over: collectibles, destroyed objects (all 3,554 sabotage targets the game tracks), SAM sites (also ones
+the base save has no record of yet), settlement counters and discovery, races and other activities (best times too),
+faction items (skulls, black boxes, drug drops), stats, black market unlocks and the higher difficulty. Missions and
+faction progress stay the base's; `--take-missions` merges them too (experimental, not verified in game).
 
-**Merged with 1.0?** It took the larger of the two saves' faction item and locations-discovered counters instead of
-counting both, so the game can show a few faction items or locations missing that never appear on the map (they are
-already picked up or discovered). Close the game, then:
+The game keeps tallies next to the progress and never recounts them: faction items, locations discovered, each
+type's "destroyed" count (fuel depots, generators...), collectibles and every settlement's counter. A merge that
+brings progress over without them leaves the game showing things missing that are already done. The merge
+recounts them all for the merged save (`panau/save/recount.py` has the details and how it was verified).
+
+**Merged with a version before 1.3?** Its tallies are short. Close the game, then:
 
 ```bash
-panau repair --originals base.sav other.sav          # dry run: shows what it would change
-panau repair --originals base.sav other.sav --write  # fixes your newest save (once; a second run skips it)
+panau repair --originals base.sav other.sav                 # dry run: shows what it would raise
+panau repair --originals base.sav other.sav --write         # fixes your newest save
+panau repair --save File1.sav File2.sav --originals base.sav other.sav --write   # or name the saves
 ```
 
-`--originals` are the two saves you merged; without them only the faction item counters are fixed.
+`--originals` are the two saves you merged (their offsets make the recount exact); without them only exact tallies
+like the faction items are fixed. A repair only ever raises a tally, and running it again changes nothing.
 
 ## Wingsuit
 

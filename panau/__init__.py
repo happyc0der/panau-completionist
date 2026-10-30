@@ -9,5 +9,5 @@
 The overlay, cheats and wingsuit are "earned" by default: they unlock once your save shows the story finished
 (mercenary mode) on Hardcore. Set unlock = "always" in the config to have them from the start.
 """
-__version__ = '1.2.2'
+__version__ = '1.3.0'
 GAME_APPID = 8190

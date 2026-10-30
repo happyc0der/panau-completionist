@@ -1,6 +1,6 @@
 [project]
 name = "panau-completionist"
-version = "1.2.2"
+version = "1.3.0"
 description = "Just Cause 2 (Steam, PC) completionist tools: best-of-both save merge, real-time arrows to every remaining collectible and sabotage target, infinite health/ammo, wingsuit installer, crash fix."
 readme = "README.md"
 license = { file = "LICENSE" }

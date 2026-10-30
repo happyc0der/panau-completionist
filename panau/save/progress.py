@@ -37,22 +37,6 @@ def faction_items(save):
                    for n in range(100)) for k in FACTION_ITEMS}
 
 
-def faction_counter_fixes(save):
-    """{stat: (now, should be)} for the faction item counters that disagree with the activity list."""
-    found = faction_items(save)
-    want = {stat: found[k] for k, stat in FACTION_ITEMS.items()}
-    want.update({stat: sum(found.values()) for stat in FACTION_TOTALS})
-    stats = dict(save['stats'])
-    return {s: (struct.unpack('<I', stats[s])[0], n) for s, n in want.items() if struct.unpack('<I', stats[s])[0] != n}
-
-
-def fix_faction_counters(save):
-    """Sets the faction item counters from the activity list; returns what changed (see faction_counter_fixes)."""
-    fixes = faction_counter_fixes(save)
-    save['stats'] = [(k, struct.pack('<I', fixes[k][1]) if k in fixes else d) for k, d in save['stats']]
-    return fixes
-
-
 def summary(save):
     return {
         'difficulty': save.difficulty,

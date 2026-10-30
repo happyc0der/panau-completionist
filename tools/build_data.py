@@ -16,9 +16,11 @@ What it builds:
   settlements.json      the 405 locations in settlements.bin order (= a save's location id)
   group_cells.json.gz   target group -> placement cell (file stem), for crediting settlement counters in merges
   pipeline_panels.json  control panel group -> pipeline group
+  counters.json.gz      target group -> [activity type, settlement]: the counters it raises (see save/recount.py)
 done_flags.json is NOT rebuilt here: it was derived from saves and live play (see panau/save/world.py).
 
---check compares the result with the data already in --out instead of writing it.
+--check compares the result with the data already in --out instead of writing it. --counters writes only
+counters.json.gz (keeping the shipped targets, whose positions were checked in game).
 
 A group id (property ce458d96) ties the parts of one object together and is the id saves use.
 Positions are world space: each node's mat43 is relative to its parent, so transforms are composed down the tree.
@@ -249,7 +251,22 @@ def build(game):
             seen.add(t['group']); uniq.append(t)
     for t in uniq:
         cells[f'{t["group"]:08x}'] = by_group[t['group']][0][5] if t['group'] in by_group else None
-    return {'targets': uniq, 'ignored': ignored}, cells, link
+    return {'targets': uniq, 'ignored': ignored}, cells, link, counters(uniq, by_group)
+
+
+def counters(targets, by_group):
+    """{group: [activity type, settlement]}: the counters a target raises when destroyed/collected. Its events name
+    them: 'gsy.activity.typeNN' (the per-type 'destroyed' stat, 349 + 3 * NN) and '<settlement grid>.count.up'.
+    Propaganda trailers fire type 06 from the spawned vehicle, so it is not in their placement."""
+    out = {}
+    for t in targets:
+        text = [v for o in by_group.get(t['group'], ()) for v in o[4].values() if isinstance(v, str)]
+        types = sorted({int(m.group(1)) for s in text for m in re.finditer(r'gsy\.activity\.type(\d+)', s)})
+        ups = sorted({m.group(1) for s in text for m in re.finditer(r'(?<![\w.#])([\w.#]+?)\.count\.up\b', s)})
+        kind = 6 if t['label'] == 'propaganda' else (types[0] if len(types) == 1 else None)
+        if kind is not None or ups:
+            out[f'{t["group"]:08x}'] = [kind, ups[0] if len(ups) == 1 else None]
+    return out
 
 
 def main():
@@ -257,14 +274,22 @@ def main():
     ap.add_argument('--game', help='Just Cause 2 folder (default: found through Steam)')
     ap.add_argument('--out', default=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'panau', 'data'))
     ap.add_argument('--check', action='store_true')
+    ap.add_argument('--counters', action='store_true', help='write only counters.json.gz')
     a = ap.parse_args()
     game = a.game
     if not game:
         from panau import steam
         game = steam.game_dir()
-    targets, cells, link = build(game)
+    targets, cells, link, cnt = build(game)
     sett = settlements(game)
     print(f'targets {len(targets["targets"])} ignored {len(targets["ignored"])} settlements {len(sett)} pipelines {len(link)}')
+    if a.counters:
+        shipped = {t['group'] for t in json.load(gzip.open(os.path.join(a.out, 'targets.json.gz'), 'rt', encoding='utf-8'))['targets']}
+        cnt = {g: v for g, v in cnt.items() if int(g, 16) in shipped}
+        with gzip.open(os.path.join(a.out, 'counters.json.gz'), 'wt', encoding='utf-8') as f:
+            json.dump(cnt, f, separators=(',', ':'))
+        print(f'counters for {len(cnt)} of {len(shipped)} shipped targets written to', a.out)
+        return
     if a.check:
         with gzip.open(os.path.join(a.out, 'targets.json.gz'), 'rt', encoding='utf-8') as f:
             old = {t['group']: t for t in json.load(f)['targets']}
@@ -283,6 +308,8 @@ def main():
         json.dump(cells, f, separators=(',', ':'))
     json.dump(sett, open(os.path.join(a.out, 'settlements.json'), 'w'), indent=1)
     json.dump(link, open(os.path.join(a.out, 'pipeline_panels.json'), 'w'), indent=1)
+    with gzip.open(os.path.join(a.out, 'counters.json.gz'), 'wt', encoding='utf-8') as f:
+        json.dump(cnt, f, separators=(',', ':'))
     print('written to', a.out)
 
 

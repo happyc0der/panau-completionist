@@ -20,7 +20,7 @@ panau config unlock always  # only if they don't want the "earned" unlock
 
 | Tool | Proof it works |
 |---|---|
-| save merge | `panau merge A B` dry run prints counts; after writing and loading in game, the game's next autosave (Save00, rewritten seconds after a load) still has the same collectible count and difficulty; `panau audit A B` exits 0 (it also checks the faction item counters; `panau repair --originals A B --write` fixes a save merged with 1.0) |
+| save merge | `panau merge A B` dry run prints counts; after writing and loading in game, the game's next autosave (Save00, rewritten seconds after a load) still has the same collectible count and difficulty; `panau audit A B` exits 0 (it also checks every tally; `panau repair --originals A B --write` fixes a save merged before 1.3) |
 | overlay | with the game running and unlocked, `panau overlay` shows red/white arrows; destroying a nearby target removes its arrow within ~0.3 s |
 | cheats | `panau cheats` while in game: health stays full under fire; a clip never empties |
 | unlock | `panau` prints `unlock: earned: ...` or `locked: ...` with the reason |
@@ -37,6 +37,10 @@ panau config unlock always  # only if they don't want the "earned" unlock
 8. **Don't ship or download game files or other people's mods** into the repo. Wingsuit mods are installed from a zip the person downloaded.
 9. **Stats 315 and 330** come back as 0 after a merge: the game recomputes them. Not a bug, and not completion-relevant.
 10. **Steam Cloud** syncs the save folder; an edited save uploads on the next sync. That's normal, but tell the person.
+11. **Tallies are not recounted by the game.** Faction items, locations discovered, per-type "destroyed" counts and settlement counters only ever get +1 per event. Any edit that adds progress without them makes the game show things missing that are already done. Use `panau.save.recount` (it raises tallies to the save's own records + the originals' offsets); never set a tally to a guessed value.
+12. **Not every objective marker is a completion target.** A mission's own props and a few outpost depots carry one too. The tell: no live marker near it and no progress-table entries in any save. Drop them in `tools/build_data.py` with the evidence, then edit the shipped `targets.json.gz` entries (a full rebuild moves positions up to 100 m off the in-game-checked ones).
+11. **Tallies are not progress.** The game shows counters (faction items, locations, "X destroyed", settlement %) that it only ever adds to; it never recounts them from the progress. Anything that changes progress in a save must recount them (`panau.save.recount`), or the game shows things missing that no longer exist.
+12. **A mid-mission save is still a save**: during a mission the activities header slot 0 holds the mission id and there are 8 extra sections. Don't treat it as corrupt.
 
 ## Layout
 
@@ -48,7 +52,8 @@ panau/
   steam.py        finds Steam, the game, the save folder (config overrides: game_dir, save_dir)
   config.py       %APPDATA%\panau-completionist\config.json
   save/           format.py (sections, section table), world.py (progress table, SAMs), sections.py (per-section
-                  best-of-both), merge.py (the full merge), audit.py, progress.py (difficulty, story)
+                  best-of-both), merge.py (the full merge), recount.py (tallies the game never recounts),
+                  audit.py, progress.py (difficulty, story, faction items)
   game/           memory.py (read/write another process), addresses.py (every address + build check),
                   live.py (what is left: save + in-memory table + live markers/pickups)
   overlay.py      arrows (one tiny window per arrow) and the optional radar
@@ -64,4 +69,7 @@ tests/           offline tests (python -m unittest); some use a real save via PA
 
 1. Find what the overlay thinks: target label + group id near the camera (`panau.game.live.camera()` gives the camera position; `panau.data.targets()` the list).
 2. Compare three things for that group: its world-table entries (`save.world.states()`), its live marker (`Progress.markers()`), and how it looks in the world (ask the person).
-3. A wrong arrow on a merged-in object: see trap 5. A missing kind: check `tools/build_data.py`'s objective rules (the `act_*` marker text). A wrong per-type flag: fix `done_flags.json` with evidence from a live destruction, not a guess.
+3. A wrong arrow on a merged-in object: see trap 5. An arrow on something that never counts: trap 12. A missing kind: check `tools/build_data.py`'s objective rules (the `act_*` marker text). A wrong per-type flag: fix `done_flags.json` with evidence from a live destruction, not a guess.
+4. "The game says N more but there's nothing left": a short tally (trap 11). `panau audit A B` lists them; `panau repair --originals A B --write` raises them.
+4. An arrow on something that never counts: no marker loaded near it and no world-table entries in any save. Look at its placement strings: a mission's own prop (`<mission>.specifics.enable`, `msy.mission.fail`), or a site whose objects raise no `<settlement>.count.up` and are never saved (outpost dfd38). Exclude it in `tools/build_data.py`, and edit the shipped `targets.json.gz` entries rather than replacing the file (rebuild positions differ from the in-game-checked ones).
+5. "The game says N more but there is nothing left": a short tally (trap 11). `panau audit A B` lists them.

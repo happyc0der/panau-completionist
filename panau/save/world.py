@@ -16,7 +16,7 @@ import collections
 import struct
 
 from panau import data
-from panau.save.format import EMPTY_KEY, ITEM_LISTS, WORLD_SLOTS, item_lists, u32
+from panau.save.format import EMPTY_KEY, ITEM_LISTS, WORLD_SLOTS, build_item_lists, item_lists, u32
 
 SAM_LIST2 = bytes.fromhex('bb2e8319')
 SAM_LIST3 = bytes.fromhex('172ca9f7')
@@ -76,9 +76,29 @@ def copy_groups(world_records, source_states, groups):
             for k, v in world_records]
 
 
-def mark_sams(items_records, groups):
+def mark_sams(items_records, groups, source=None):
     """Item list 3 SAM entries of these groups: flag 2 -> 1 (destroyed), edited in place (order and sizes kept).
-    Returns (records, count changed)."""
+    A SAM site the save has no entry for yet (it never got near it) gets the source save's entry: the lists are then
+    rebuilt in the game's own order (by group id, then type key), and a rebuild of an unchanged section is
+    byte-identical. Returns (records, count changed)."""
+    out, changed = _mark_sams_in_place(items_records, groups)
+    if source is None:
+        return out, changed
+    lists, src = item_lists(out), item_lists(source)
+    have = {struct.unpack('<I', k[4:])[0] for k in lists[3] if k[:4] == SAM_LIST3} | \
+           {struct.unpack('<I', k[4:])[0] for k in lists[2] if k[:4] == SAM_LIST2}
+    added = set()
+    for li, key, flag in ((3, SAM_LIST3, 1), (2, SAM_LIST2, 0)):
+        for k, v in src[li].items():
+            g = struct.unpack('<I', k[4:])[0]
+            if k[:4] == key and g in groups and g not in have and g not in added and v[flag] == b'\x01':
+                lists[li][k] = list(v); added.add(g)
+    if added:
+        out = build_item_lists(lists)
+    return out, changed + len(added)
+
+
+def _mark_sams_in_place(items_records, groups):
     d = dict(items_records)
     sizes = [u32(d[i]) for i in range(4)]
     out = list(items_records)

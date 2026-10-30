@@ -75,7 +75,7 @@ class RealSave(unittest.TestCase):
         try:
             self.assertFalse(any(m for m, _ in audit.objectives(f.name, [a, b]).values()))
             self.assertFalse(any(audit.sections(f.name, [a, b]).values()))
-            self.assertFalse(audit.counters(f.name))         # faction item counters match the merged list
+            self.assertFalse(audit.counters(f.name, [a, b]))  # every tally matches the merged records
         finally:
             os.remove(f.name)
 

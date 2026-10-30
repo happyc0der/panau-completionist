@@ -8,6 +8,7 @@ README). Positions are world coordinates in metres (x east, y up, z north).
 - pipeline_panels.json  pipeline control panel group -> pipeline group (pipelines are sabotaged at the panel)
 - settlements.json      the 405 locations; a save's location id is the index in this list
 - group_cells.json.gz   target group -> the placement cell (map tile) it lives in, used to credit settlement counters
+- counters.json.gz      target group -> [activity type, settlement grid]: the tallies its destruction raises
 """
 import functools
 import gzip
@@ -51,6 +52,12 @@ def pipeline_panels():
 @functools.lru_cache(maxsize=None)
 def settlements():
     return _json('settlements.json')
+
+
+@functools.lru_cache(maxsize=None)
+def counters():
+    """{group: (activity type or None, settlement grid or None)}: the counters a target raises (save/recount.py)."""
+    return {int(k, 16): tuple(v) for k, v in _json('counters.json.gz').items()}
 
 
 @functools.lru_cache(maxsize=None)

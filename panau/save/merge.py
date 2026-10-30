@@ -9,8 +9,8 @@ What is merged (each step was verified in game: the game's next autosave kept it
   - settlement counters: credited with the objects brought over (the game trusts these counters, it never recounts)
   - location discovery flags, stats (records and counters), flags59, black market unlocks, activities (missions,
     races, stunts, faction items; best race times): the better of the two
-  - faction item counters (stats 333-336, 370): recounted from the merged activity list
-  - the locations-discovered counter (stat 316): recounted for the merged discovery flags
+  - the tallies the game never recounts (faction items, locations discovered, each type's "destroyed" count, the
+    collectible and settlement counters): recounted for the merged save (see recount.py)
   - difficulty: the higher of the two (or what you pass)
 Missions and faction progress stay the base's unless take_missions=True (implemented, but not verified in game:
 pick the save with the furthest story as the base).
@@ -21,23 +21,11 @@ import collections
 import struct
 
 from panau import data
-from panau.save import progress, sections, world
+from panau.save import recount, sections, world
 from panau.save.format import Save, item_lists, u32
 
 RESOURCE_STATS = {'e1162daa': 326, 'e6fb1698': 327, '5353acb9': 328, 'f8fc3159': 329}   # item list 2 key -> stat
 RESOURCE_TOTAL = 331
-# locations discovered (of 368: the 360 in the save's location list + region titles); the game only ever adds 1 per
-# new discovery, so it must be recounted for the merged list (see discovered_count)
-DISCOVERED = 316
-
-
-def discovered_count(a, b):
-    """(stat 316 for a merge of saves a and b, locations only b had discovered). The counter = the discovered
-    locations in the list + the discovered region titles, and each save's counter minus its list is its titles; the
-    game never recounts either part."""
-    da, db = sections.discovered(a['locations']), sections.discovered(b['locations'])
-    titles = max(u32(dict(s['stats'])[DISCOVERED]) - len(d) for s, d in ((a, da), (b, db)))
-    return len(da | db) + max(0, titles), len(db - da)
 
 
 def settlement_cells():
@@ -77,7 +65,6 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
     for s in (other, base):
         kind.update({k[4:]: k[:4].hex() for k in item_lists(s['items'])[2]})
     plus = collections.Counter(kind.get(v[4:]) for v in add)
-    discovered, found = discovered_count(base, other)
     base_stats = dict(base['stats'])
     merged_stats = sections.merge_stats(base['stats'], other['stats'])
     out = []
@@ -87,14 +74,11 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
             v = struct.pack('<I', u32(base_stats[k]) + plus[t])
         elif k == RESOURCE_TOTAL:
             v = struct.pack('<I', u32(base_stats[k]) + sum(plus[t] for t in RESOURCE_STATS))
-        elif k == DISCOVERED:
-            v = struct.pack('<I', discovered)
         out.append((k, v))
     base['stats'] = out
-    report.append(f'locations discovered: {discovered} ({found} only in the other save)')
 
     # 4. SAM sites
-    base['items'], sams = world.mark_sams(base['items'], world.sam_done(other['items']))
+    base['items'], sams = world.mark_sams(base['items'], world.sam_done(other['items']), other['items'])
     report.append(f'SAM sites marked destroyed: {sams}')
 
     # 5. settlement counters (credited with what was brought over) and discovery flags
@@ -116,10 +100,6 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
 
     # 6. the rest: the better of the two
     base['activities'] = sections.merge_activities(base['activities'], other['activities'])
-    # faction items are one-item activities: their counters must count the merged list, not the larger of two counts
-    fixed = progress.fix_faction_counters(base)
-    report.append(f'faction items: {sum(progress.faction_items(base).values())} of 300' +
-                  (f' (counters recounted: {fixed})' if fixed else ''))
     base['flags59'] = sections.merge_flags59(base['flags59'], other['flags59'])
     base['unlocks'] = sections.merge_unlocks(base['unlocks'], other['unlocks'])
     report.append(f'black market unlocks: {u32(dict(base["unlocks"])[0])} + {u32(dict(base["unlocks"])[8])}')
@@ -127,6 +107,13 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
         base['main'] = sections.merge_main(base['main'], other['main'])
         base['factions'] = sections.merge_factions(base['factions'], other['factions'])
         report.append('missions and factions: merged (experimental)')
+
+    # 7. the tallies the game never recounts (faction items, locations, per-type, collectible and settlement counters):
+    # the merged save's own records + the originals' offsets
+    fx = recount.fixes(base, (Save.load(base_path), Save.load(other_path)))
+    recount.apply(base, fx)
+    report.append(f'tallies recounted: {len(fx)}')
+    report.extend('  ' + line for line in recount.describe(fx))
 
     diff = max(base.difficulty, other.difficulty) if difficulty is None else difficulty
     base['difficulty'] = [(0, struct.pack('<I', diff))]
