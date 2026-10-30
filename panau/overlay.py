@@ -188,16 +188,8 @@ class Overlay:
         st, pr = self.state, self.progress
         x, z = cam[3][0], cam[3][2]
         raw = pr.markers()
-        before = set(pr.live_destroyed)
         pr.vanished(raw, cam[3])
-        # a destroyed marker that is not in the data (the truck a propaganda spawn point puts out) takes the
-        # sabotage target within 30 m with it
-        for g, typ, standing, q in raw:
-            if typ == A.MARKER_SABOTAGE and g in pr.live_destroyed and g not in before and g not in self.target_groups:
-                for t in self.near(q[0], q[2], 30):
-                    if t[0] == 'sabotage' and math.hypot(t[3][0] - q[0], t[3][2] - q[2]) < 30:
-                        pr.live_destroyed.add(t[2])
-        targets = [(d, t) for d, t in st['poi_targets'] if t[2] not in pr.live_destroyed]
+        targets =[(d, t) for d, t in st['poi_targets'] if t[2] not in pr.live_destroyed]
         shown = [t[3] for _, t in targets]
         for g, typ, standing, q in raw:                     # pickups the data doesn't know (never sabotage: props)
             old = st['last_pos'].get(g); st['last_pos'][g] = q

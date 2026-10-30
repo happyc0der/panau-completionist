@@ -99,8 +99,9 @@ def find(objs):
         elif len(first) == 4 and u32(first) == WORLD_SLOTS and len(o) == 4:
             f['world'] = k
             f['items'] = k + 1
-        elif len(first) == 4 and u32(first) == 0 and maxidx > 1000 and len(o) > 1 and o[1][0] == 1:
-            f['activities'] = k
+        elif len(first) == 4 and maxidx > 1000 and len(o) > 1 and o[1][0] == 1 and {16, 100} <= {i for i, _ in o[:120]} \
+                and 50 not in {i for i, _ in o[:120]}:
+            f['activities'] = k                   # header idx 0-16 (idx 0 = the mission in progress, or 0), then 100+
     if 'items' in f:                               # the difficulty: the lone u32 two sections after 'items'
         k = f['items'] + 2
         if len(objs[k]) == 1 and len(objs[k][0][1]) == 4 and u32(objs[k][0][1]) <= 3:

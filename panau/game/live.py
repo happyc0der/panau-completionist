@@ -10,7 +10,8 @@ Three sources, cheapest and most real-time first:
 Rules learned the hard way:
   - a marker saying "destroyed" (status bit 0 clear) hides its target immediately.
   - a marker saying "standing" never overrides the save: objects copied as destroyed by a save merge keep a stale
-    "standing" marker forever.
+    "standing" marker forever. It does undo what was seen destroyed live: a failed mission or a reload brings
+    objects back (their markers stand again, and the progress table drops them).
   - SAM sites are tracked in the save's item lists, not the progress table (see save/world.py).
   - pipelines are sabotaged at a control panel. Its marker's status bit 0 clears the moment the pipeline is done
     (0x21 -> 0x20), like a sabotage marker's; a panel marker that disappears next to you counts too.
@@ -121,7 +122,16 @@ class Progress:
             self.slot_info[i] = (g, want); self.g_slots[g].append(i)
             if ((bits[i >> 3] >> (i & 7)) & 1) == want:
                 done.add(g)
-        self.done_groups, self.last_t, self.last_bits = done, t, bits
+        self._set_done(done)
+        self.last_t, self.last_bits = t, bits
+
+    def _set_done(self, done):
+        """A group the game had recorded as done and no longer does was undone (a failed mission, a reload): forget
+        that it was seen destroyed or collected live as well."""
+        undone = self.done_groups - done
+        self.live_destroyed -= undone
+        self.live_collected -= undone
+        self.done_groups = done
 
     def _apply_changes(self, bits):
         touched = set()
@@ -134,7 +144,8 @@ class Progress:
                 done.add(g)
             else:
                 done.discard(g)
-        self.done_groups, self.last_bits = done, bits
+        self._set_done(done)
+        self.last_bits = bits
 
     def _table(self):
         if time.time() < self.next_table or not self.game.h or self.save_keys is None:
@@ -186,18 +197,21 @@ class Progress:
 
     # --- live lists ---------------------------------------------------------------------------------------------------
     def pickups(self):
-        p, n = self.game.u32(A.PICKUP_HEAD) or 0, 0
+        got, there, p, n = set(), set(), self.game.u32(A.PICKUP_HEAD) or 0, 0
         while p and n < 2000:
             b = self.game.read(p, 0x48)
             if not b or struct.unpack_from('<I', b, 0)[0] != A.PICKUP_VTABLE:
-                return
-            if b[A.PICKUP_COLLECTED]:
-                self.live_collected.add(struct.unpack_from('<I', b, A.PICKUP_GROUP)[0])
+                break
+            (got if b[A.PICKUP_COLLECTED] else there).add(struct.unpack_from('<I', b, A.PICKUP_GROUP)[0])
             p = struct.unpack_from('<I', b, A.PICKUP_NEXT)[0]; n += 1
+        self.live_collected |= got
+        self.live_collected -= there - got                 # lying there again: a failed mission or a reload
 
     def markers(self):
-        """[(group, type, standing, (x, y, z))] for every loaded sabotage/item marker; records destroyed ones."""
+        """[(group, type, standing, (x, y, z))] for every loaded sabotage/item marker; records destroyed ones, and
+        forgets ones seen destroyed whose markers stand again (a failed mission or a reload undid them)."""
         out, panels, p, n = [], {}, self.game.u32(A.MARKER_HEAD) or 0, 0
+        down, up = set(), set()
         while p and n < 3000:
             b = self.game.read(p, 0xC0)
             if not b or struct.unpack_from('<I', b, 0)[0] != A.MARKER_VTABLE:
@@ -205,16 +219,17 @@ class Progress:
             typ = b[A.MARKER_TYPE]
             g = struct.unpack_from('<I', b, A.MARKER_GROUP)[0]
             pos = struct.unpack_from('<3f', b, A.MARKER_POS)
+            standing = bool(b[A.MARKER_STATUS] & 1)
             if g in self.panel_link:
                 panels[g] = (typ, pos)
-                if not b[A.MARKER_STATUS] & 1:
-                    self.live_destroyed.add(self.panel_link[g])
+                (up if standing else down).add(self.panel_link[g])
             if (typ == A.MARKER_SABOTAGE or typ in A.MARKER_ITEMS) and abs(pos[0]) < 17000 and abs(pos[2]) < 17000:
-                standing = bool(b[A.MARKER_STATUS] & 1)
-                if typ == A.MARKER_SABOTAGE and not standing:
-                    self.live_destroyed.add(g)
+                if typ == A.MARKER_SABOTAGE:
+                    (up if standing else down).add(g)
                 out.append((g, typ, standing, pos))
             p = struct.unpack_from('<I', b, A.MARKER_NEXT)[0]; n += 1
+        self.live_destroyed |= down
+        self.live_destroyed -= up - down
         self.panels_prev, self.panels_now = self.panels_now, panels
         return out
 
