@@ -13,6 +13,7 @@ import collections
 import ctypes
 import ctypes.wintypes as wt
 import math
+import os
 import time
 import tkinter as tk
 
@@ -191,11 +192,38 @@ class Overlay:
                 targets.append((d, ('item', A.MARKER_ITEMS.get(typ, 'item'), g, q)))
         if len(st['last_pos']) > 5000:
             st['last_pos'].clear()
+        self.audit(raw)
         targets.sort(key=lambda t: t[0])
         key = tuple(t[1][2] for t in targets)
         if key != st.get('tkey'):                           # contents changed: redraw even if the camera didn't move
             st['tkey'] = key; st['tver'] += 1
         st['targets'] = targets
+
+    def audit(self, raw):
+        """Self-check, logged to %APPDATA%\\panau-completionist\\audit.log: a target the game's marker says is
+        destroyed while the progress table still says standing. Right after destruction that is normal (the table
+        catches up within ~2 minutes), so only disagreements lasting over 3 minutes are logged, once per object.
+        One that stays points at a wrong per-type flag in done_flags.json."""
+        pr, now = self.progress, time.time()
+        first = self.state.setdefault('disagree', {})
+        logged = self.state.setdefault('logged', set())
+        labels = self.state.setdefault('labels', {t[2]: t[1] for t in self.targets})
+        for g, typ, standing, _ in raw:
+            if typ != A.MARKER_SABOTAGE or standing or g not in labels or labels[g] == 'SAM site':
+                continue
+            if g in pr.done_groups:
+                first.pop(g, None)
+            elif now - first.setdefault(g, now) > 180 and g not in logged:
+                logged.add(g)
+                keys = {pr.last_t[i * 8:i * 8 + 4].hex(): (pr.last_bits[i >> 3] >> (i & 7)) & 1
+                        for i in pr.g_slots.get(g, ())} if pr.last_t else {}
+                try:
+                    os.makedirs(config.DIR, exist_ok=True)
+                    with open(os.path.join(config.DIR, 'audit.log'), 'a', encoding='utf-8') as f:
+                        f.write(f'{time.strftime("%Y-%m-%d %H:%M:%S")} {labels[g]} {g:08x}: marker destroyed, progress '
+                                f'table still standing after 3 min; its entries {keys}\n')
+                except OSError:
+                    pass
 
     # --- arrows (15x a second, only when something changed) ---------------------------------------------------------
     def frame(self):

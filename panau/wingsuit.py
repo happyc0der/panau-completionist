@@ -33,13 +33,28 @@ def _kind(names):
     return None
 
 
+DROPZONE_2017 = ('camera_defaults.bin', 'camera_settings.bin', 'kc001_base.asb', 'ms15text.csv', 'parachuteparams.bin')
+FILES_2010 = ('x_jj_wingsuit.arc', 'x_jj_wingsuit.tab')
+
+
+def detect(game):
+    """Which mod's files are in the game folder, however they got there."""
+    if os.path.exists(os.path.join(game, 'dropzone', 'parachuteparams.bin')):
+        return '2017'
+    if os.path.exists(os.path.join(game, 'archives_win32', FILES_2010[0])):
+        return '2010'
+    return None
+
+
 def status():
     try:
         with open(MANIFEST, encoding='utf-8') as f:
             m = json.load(f)
         return f"installed: the {m['kind']} mod ({len(m['files'])} files)"
     except (OSError, ValueError):
-        return 'not installed'
+        pass
+    kind = detect(steam.game_dir())
+    return f'the {kind} mod is installed (not by panau)' if kind else 'not installed'
 
 
 def remove():
@@ -50,7 +65,17 @@ def remove():
         with open(MANIFEST, encoding='utf-8') as f:
             m = json.load(f)
     except (OSError, ValueError):
-        return 'not installed'
+        kind = detect(game)                                 # installed some other way: remove the known files
+        if not kind:
+            return 'not installed'
+        m = {'kind': kind, 'files': [os.path.join('dropzone', n) for n in DROPZONE_2017] if kind == '2017'
+             else [os.path.join('archives_win32', n) for n in FILES_2010]}
+        if kind == '2017' and not os.path.exists(os.path.join(BACKUP, 'pc_140.arc')):
+            print('note: the original DLC\\pc_140 files were not backed up by panau; restore them with Steam > '
+                  'Just Cause 2 > Properties > Installed Files > Verify integrity of game files')
+        os.makedirs(config.DIR, exist_ok=True)
+        with open(MANIFEST, 'w', encoding='utf-8') as f:
+            json.dump(m, f)
     for rel in m['files']:
         p = os.path.join(game, rel)
         if os.path.exists(p):
@@ -74,7 +99,7 @@ def install(zip_path):
         kind = _kind(names)
         if not kind:
             return 'this zip is neither of the two supported wingsuit mods'
-        if os.path.exists(MANIFEST):
+        if os.path.exists(MANIFEST) or detect(game):
             remove()
         os.makedirs(BACKUP, exist_ok=True)
         files = []
@@ -83,8 +108,11 @@ def install(zip_path):
             base = os.path.basename(n)
             if kind == '2017' and low.endswith(('dlc/pc_140.arc', 'dlc/pc_140.tab')):
                 dest_rel = os.path.join('DLC', base)
-                if not os.path.exists(os.path.join(BACKUP, base)):
-                    shutil.copy2(os.path.join(game, dest_rel), os.path.join(BACKUP, base))
+                current = os.path.join(game, dest_rel)
+                with open(current, 'rb') as f:
+                    already_modded = f.read() == z.read(n)  # left over from an install made some other way
+                if not os.path.exists(os.path.join(BACKUP, base)) and not already_modded:
+                    shutil.copy2(current, os.path.join(BACKUP, base))
             elif kind == '2017' and '/dropzone/' in '/' + low:
                 dest_rel = os.path.join('dropzone', base)
                 files.append(dest_rel)
