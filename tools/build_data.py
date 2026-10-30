@@ -8,7 +8,9 @@ What it reads: archives_win32\pc*.tab/.arc -> zlib / SARC containers -> placemen
 What it builds:
   targets.json.gz       collectibles: groups with a CResourceItem "rei.<kind>BoostPickup" and a "dit.tin" pickup trigger
                         sabotage targets: groups whose CTargetIndicator carries an "act_<kind>_tin_txt" display text
-                        (the game's own objective list), minus 9 undestroyable props (no damage component), plus
+                        (the game's own objective list), minus 9 undestroyable props (no damage component), a
+                        mission's own props (enabled only during it) and outpost dfd38's 4 untracked fuel depots
+                        (neither is ever in the game's progress table), plus
                         propaganda trailer spawn points and pipelines (sabotaged at a control panel)
                         ignored: parked helicopters (GB017b cockpits), which carry a marker but should not get arrows
   settlements.json      the 405 locations in settlements.bin order (= a save's location id)
@@ -46,6 +48,11 @@ KIND_NAMES = {'fueldepot': 'fuel depot', 'gaspump': 'gas pump', 'smallantenna': 
               'constructcrane': 'construction crane', 'radarsphere': 'radar sphere'}
 ITEM_KINDS = {'weapon': 'weapon part', 'vehicle': 'vehicle part', 'armor': 'armor', 'cash': 'cash'}
 DAMAGE = {'CDamageControl', 'CDamageableObject', 'CSAMSite'}
+# objectives that look like sabotage targets but never count (the game never puts them in its progress table):
+MISSION_ONLY = re.compile(r'\.specifics\.enable\b|\bmsy\.mission\.fail\b')       # a mission's own props
+# the four fuel depots of outpost dfd38: no settlement counter, and in no save's progress table (every other fuel
+# depot in the game is, standing or destroyed), so they reset; nothing in the data tells them from dfd14's, which count
+UNTRACKED = {0x92c5e845, 0x2beeb995, 0xd021adea, 0x3735aee0}
 
 
 # --- archives ------------------------------------------------------------------------------------------------------
@@ -217,8 +224,13 @@ def build(game):
             continue
         kind = tins[0][1]
         marker_pos = list(tins[0][0][3])                             # the arrow points at the objective marker
+        text = [v for o in os_ for v in o[4].values() if isinstance(v, str)]
         if 'geo.GB017b' in names[g]:                                   # parked helicopters
             ignored.append({'label': 'helicopter', 'group': g, 'pos': list(world_pos(os_))})
+        elif any(MISSION_ONLY.search(s) for s in text):                # exists only during its mission (f3t05's silo)
+            ignored.append({'label': 'mission prop', 'group': g, 'pos': marker_pos})
+        elif g in UNTRACKED:
+            ignored.append({'label': 'untracked fuel depot', 'group': g, 'pos': marker_pos})
         elif classes[g] & DAMAGE:                                      # props without a damage component never count
             targets.append({'kind': 'sabotage', 'label': KIND_NAMES.get(kind, kind), 'group': g, 'pos': marker_pos})
     for o in objs:                                                     # propaganda trailer spawn points

@@ -25,6 +25,8 @@ class Data(unittest.TestCase):
         self.assertEqual(kinds, {'item', 'sabotage'})
         self.assertEqual(sum(1 for k, *_ in t if k == 'item'), 2524)
         self.assertGreater(sum(1 for k, *_ in t if k == 'sabotage'), 3500)
+        # never counted: faction mission f3t05's silo, an untracked fuel depot of outpost dfd38
+        self.assertFalse({0x19cf089e, 0x92c5e845} & {g for _, _, g, _ in t})
         self.assertEqual(len({g for _, _, g, _ in t}), len(t))
         self.assertTrue(all(abs(p[0]) < 17000 and abs(p[2]) < 17000 for *_, p in t))
 
