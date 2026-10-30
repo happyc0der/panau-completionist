@@ -45,13 +45,9 @@ class CURSORINFO(ctypes.Structure):
     _fields_ = [('cbSize', wt.DWORD), ('flags', wt.DWORD), ('hCursor', wt.HANDLE), ('pt', wt.POINT)]
 
 
-def menu_open(game):
-    """True while the pause menu, the map or the black market is open. The first two show a mouse cursor, which play
-    never does; the black market shows none but has a flag in the game."""
+def cursor_showing():
     ci = CURSORINFO(cbSize=ctypes.sizeof(CURSORINFO))
-    if user32.GetCursorInfo(ctypes.byref(ci)) and ci.flags & 1:      # CURSOR_SHOWING
-        return True
-    return game.read(A.BLACK_MARKET_OPEN, 1) == bytes([1])
+    return bool(user32.GetCursorInfo(ctypes.byref(ci)) and ci.flags & 1)    # CURSOR_SHOWING
 
 
 def game_rect():
@@ -117,6 +113,19 @@ class Overlay:
         down = bool(user32.GetAsyncKeyState(vk) & 0x8000)
         was = self.state['keys'].get(vk, False); self.state['keys'][vk] = down
         return down and not was
+
+    def in_menu(self, cam):
+        """True while the pause menu, the map or the black market is open. The first two pause the world: the time of
+        day and the camera stand still (both, so a mission that freezes the clock doesn't hide the arrows while you
+        move). The pause menu also shows a mouse cursor, which play never does; the black market has its own flag."""
+        if cursor_showing() or self.game.read(A.BLACK_MARKET_OPEN, 1) == bytes([1]):
+            return True
+        owner = self.game.u32(A.TIME_OF_DAY[0])
+        world = (owner and self.game.read(owner + A.TIME_OF_DAY[1], 4), cam and cam[2] + cam[3])
+        now = time.time()
+        if world != self.state.get('world'):
+            self.state['world'], self.state['world_moved'] = world, now
+        return now - self.state['world_moved'] > 0.3
 
     def near(self, x, z, r):
         cx, cz, n = int(x // 500), int(z // 500), int(r // 500) + 1
@@ -251,9 +260,10 @@ class Overlay:
             st['range'] = (st['range'] + 1) % len(self.ranges); st['range_msg'] = time.time()
         rng = self.ranges[st['range']]
         gr = game_rect()
-        if gr and menu_open(self.game):                     # nothing on top of the game's menus
-            gr = None
         cam = camera(self.game) if rng and gr else None
+        st['in_menu'] = bool(gr) and self.in_menu(cam)
+        if st['in_menu']:                                   # nothing on top of the game's menus
+            gr = cam = None
         msg = bool(gr) and time.time() - st.get('range_msg', 0) < 2
         sig = (rng, bool(gr), msg, st['tver'], len(self.progress.live_collected),
                cam and tuple(round(v, 3) for v in cam[0] + cam[1] + cam[2]) + tuple(round(v, 1) for v in cam[3]))
@@ -302,7 +312,7 @@ class Overlay:
     def draw_radar(self, cam):
         c, st, sc = self.radar_cv, self.state, self.scale
         c.delete('all')
-        if not st['radar'] or not cam or not game_rect() or menu_open(self.game):
+        if not st['radar'] or not cam or not game_rect() or st.get('in_menu'):
             user32.ShowWindow(self.radar_hw, 0); return
         sw = user32.GetSystemMetrics(0)
         user32.SetWindowPos(self.radar_hw, 0, sw - self.rsize - int(60 * sc), int(60 * sc), 0, 0, SWP_MOVE_SHOW)

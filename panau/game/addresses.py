@@ -15,6 +15,8 @@ SIGNATURES = [
     (0x006C4688, bytes.fromhex('830558121901' '01')),
     # IsBlackmarketActive worker: mov cl, [0x1197AC8] (black market open)
     (0x00747687, bytes.fromhex('8a0dc87a1901')),
+    # GetTimeOfDay script function: mov ecx, [0x1191154]; movss xmm0, [ecx+20h]
+    (0x00A2DCF8, bytes.fromhex('8b0d54111901' 'f30f104120')),
 ]
 
 # --- player (CCharacterManager singleton -> CPlayer -> CCharacter) --------------------------------------------------
@@ -47,10 +49,11 @@ MARKER_SABOTAGE = 0x11                # status bit 0 = standing; it clears the i
 MARKER_PANEL = 0x15                   # interaction marker; a pipeline control panel's status bit 0 = still standing
 MARKER_ITEMS = {0x01: 'weapon part', 0x02: 'vehicle part', 0x0C: 'cash', 0x1D: 'armor'}
 
-# --- menus --------------------------------------------------------------------------------------------------------------
-# The pause menu and the map show a mouse cursor (play never does, see overlay.menu_open); the black market shows none,
-# but the game keeps this flag for it: the byte its own IsBlackmarketActive script function returns.
+# --- menus (see overlay.Overlay.in_menu) ---------------------------------------------------------------------------------
+# The pause menu and the map pause the world, so the time of day stops; the pause menu also shows a mouse cursor. The
+# black market does neither, but the game keeps a flag for it: the byte its IsBlackmarketActive script function returns.
 BLACK_MARKET_OPEN = 0x01197AC8
+TIME_OF_DAY = 0x01191154, 0x20        # float hours at [this] + 0x20, what the GetTimeOfDay script function returns
 
 # --- the in-memory progress table (same layout as the save's world section) ---------------------------------------------
 WORLD_BITS_OFFSET = 190672            # the bit array follows the 23,833 x 8-byte keys at this distance
