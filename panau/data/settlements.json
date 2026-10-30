@@ -1,0 +1,2432 @@
+[
+ {
+  "grid": "52x13",
+  "total": 30,
+  "text": "set_civ_txt_134",
+  "kind": "civ"
+ },
+ {
+  "grid": "57x33",
+  "total": 30,
+  "text": "set_civ_txt_29",
+  "kind": "civ"
+ },
+ {
+  "grid": "14x50base",
+  "total": 24,
+  "text": "set_mil_txt_118",
+  "kind": "mil"
+ },
+ {
+  "grid": "56x30",
+  "total": 30,
+  "text": "set_civ_txt_17",
+  "kind": "civ"
+ },
+ {
+  "grid": "14x37",
+  "total": 24,
+  "text": "set_mil_txt_67",
+  "kind": "mil"
+ },
+ {
+  "grid": "47x59",
+  "total": 30,
+  "text": "set_civ_txt_186",
+  "kind": "civ"
+ },
+ {
+  "grid": "56x54",
+  "total": 24,
+  "text": "set_mil_txt_77",
+  "kind": "mil"
+ },
+ {
+  "grid": "55x34",
+  "total": 30,
+  "text": "set_civ_txt_09",
+  "kind": "civ"
+ },
+ {
+  "grid": "26x41",
+  "total": 30,
+  "text": "set_civ_txt_171",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs40",
+  "total": 27,
+  "text": "set_dcs_txt_19",
+  "kind": "dcs"
+ },
+ {
+  "grid": "53x15",
+  "total": 26,
+  "text": "set_civ_txt_56",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs21",
+  "total": 27,
+  "text": "set_dcs_txt_11",
+  "kind": "dcs"
+ },
+ {
+  "grid": "km06.base",
+  "total": 24,
+  "text": "km06_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "53x58",
+  "total": 24,
+  "text": "set_mil_txt_97",
+  "kind": "mil"
+ },
+ {
+  "grid": "42x31",
+  "total": 24,
+  "text": "set_mil_txt_22",
+  "kind": "mil"
+ },
+ {
+  "grid": "45x25",
+  "total": 24,
+  "text": "set_mil_txt_16",
+  "kind": "mil"
+ },
+ {
+  "grid": "03x26",
+  "total": 32,
+  "text": "f1s07_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "dcs11",
+  "total": 27,
+  "text": "set_dcs_txt_05",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs69",
+  "total": 27,
+  "text": "set_dcs_txt_44",
+  "kind": "dcs"
+ },
+ {
+  "grid": "km02.towercomplex",
+  "total": 30,
+  "text": "km02_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "35x44",
+  "total": 30,
+  "text": "set_civ_txt_89",
+  "kind": "civ"
+ },
+ {
+  "grid": "13x42",
+  "total": 24,
+  "text": "set_mil_txt_66",
+  "kind": "mil"
+ },
+ {
+  "grid": "33x34",
+  "total": 30,
+  "text": "set_civ_txt_41",
+  "kind": "civ"
+ },
+ {
+  "grid": "46x58",
+  "total": 24,
+  "text": "set_mil_txt_19",
+  "kind": "mil"
+ },
+ {
+  "grid": "50x50",
+  "total": 24,
+  "text": "set_mil_txt_15",
+  "kind": "mil"
+ },
+ {
+  "grid": "46x56",
+  "total": 30,
+  "text": "set_civ_txt_81",
+  "kind": "civ"
+ },
+ {
+  "grid": "46x21",
+  "total": 30,
+  "text": "set_civ_txt_44",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs51",
+  "total": 27,
+  "text": "set_dcs_txt_27",
+  "kind": "dcs"
+ },
+ {
+  "grid": "22x19",
+  "total": 24,
+  "text": "set_mil_txt_23",
+  "kind": "mil"
+ },
+ {
+  "grid": "40x51",
+  "total": 30,
+  "text": "set_civ_txt_199",
+  "kind": "civ"
+ },
+ {
+  "grid": "28x20",
+  "total": 30,
+  "text": "set_civ_txt_151",
+  "kind": "civ"
+ },
+ {
+  "grid": "20x07",
+  "total": 30,
+  "text": "set_civ_txt_67",
+  "kind": "civ"
+ },
+ {
+  "grid": "19x19",
+  "total": 24,
+  "text": "set_civ_txt_128",
+  "kind": "civ"
+ },
+ {
+  "grid": "21x15",
+  "total": 30,
+  "text": "set_civ_txt_42",
+  "kind": "civ"
+ },
+ {
+  "grid": "34x34",
+  "total": 30,
+  "text": "set_civ_txt_102",
+  "kind": "civ"
+ },
+ {
+  "grid": "52x12",
+  "total": 30,
+  "text": "set_civ_txt_116",
+  "kind": "civ"
+ },
+ {
+  "grid": "37x17",
+  "total": 24,
+  "text": "set_mil_txt_32",
+  "kind": "mil"
+ },
+ {
+  "grid": "07x59",
+  "total": 30,
+  "text": "set_civ_txt_141",
+  "kind": "civ"
+ },
+ {
+  "grid": "24x50",
+  "total": 30,
+  "text": "set_civ_txt_155",
+  "kind": "civ"
+ },
+ {
+  "grid": "f1m03.interiors",
+  "total": 25,
+  "text": "f1m03_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "05x44",
+  "total": 26,
+  "text": "set_mil_txt_111",
+  "kind": "mil"
+ },
+ {
+  "grid": "32x19",
+  "total": 24,
+  "text": "set_mil_txt_73",
+  "kind": "mil"
+ },
+ {
+  "grid": "33x17",
+  "total": 32,
+  "text": "f3s01_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "48x35",
+  "total": 30,
+  "text": "set_civ_txt_187",
+  "kind": "civ"
+ },
+ {
+  "grid": "42x51",
+  "total": 30,
+  "text": "set_civ_txt_216",
+  "kind": "civ"
+ },
+ {
+  "grid": "50x39",
+  "total": 25,
+  "text": "set_civ_txt_69",
+  "kind": "civ"
+ },
+ {
+  "grid": "28x22",
+  "total": 30,
+  "text": "set_civ_txt_103",
+  "kind": "civ"
+ },
+ {
+  "grid": "55x17",
+  "total": 30,
+  "text": "set_civ_txt_62",
+  "kind": "civ"
+ },
+ {
+  "grid": "37x41",
+  "total": 30,
+  "text": "set_civ_txt_66",
+  "kind": "civ"
+ },
+ {
+  "grid": "39x44",
+  "total": 25,
+  "text": "set_mil_txt_33",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs50",
+  "total": 27,
+  "text": "set_dcs_txt_26",
+  "kind": "dcs"
+ },
+ {
+  "grid": "49x37",
+  "total": 30,
+  "text": "set_civ_txt_189",
+  "kind": "civ"
+ },
+ {
+  "grid": "f2m07.researchFacility",
+  "total": 24,
+  "text": "f2m07_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "53x36",
+  "total": 24,
+  "text": "set_mil_txt_21",
+  "kind": "mil"
+ },
+ {
+  "grid": "37x50",
+  "total": 32,
+  "text": "f1s03_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "48x40",
+  "total": 30,
+  "text": "set_civ_txt_47",
+  "kind": "civ"
+ },
+ {
+  "grid": "15x36",
+  "total": 24,
+  "text": "set_mil_txt_20",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs35",
+  "total": 27,
+  "text": "set_dcs_txt_17",
+  "kind": "dcs"
+ },
+ {
+  "grid": "08x61",
+  "total": 30,
+  "text": "set_civ_txt_121",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs20",
+  "total": 27,
+  "text": "set_dcs_txt_10",
+  "kind": "dcs"
+ },
+ {
+  "grid": "km03.gamblingHouse",
+  "total": 30,
+  "text": "km03_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "f3m06.hotel",
+  "total": 30,
+  "text": "f3m06_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "34x49",
+  "total": 30,
+  "text": "set_civ_txt_109",
+  "kind": "civ"
+ },
+ {
+  "grid": "47x37",
+  "total": 30,
+  "text": "set_civ_txt_32",
+  "kind": "civ"
+ },
+ {
+  "grid": "53x12",
+  "total": 30,
+  "text": "set_civ_txt_94",
+  "kind": "civ"
+ },
+ {
+  "grid": "48x52",
+  "total": 30,
+  "text": "set_civ_txt_135",
+  "kind": "civ"
+ },
+ {
+  "grid": "54x24",
+  "total": 30,
+  "text": "set_civ_txt_194",
+  "kind": "civ"
+ },
+ {
+  "grid": "11x53",
+  "total": 32,
+  "text": "f3s04_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "17x02",
+  "total": 28,
+  "text": "set_mil_txt_101",
+  "kind": "mil"
+ },
+ {
+  "grid": "19x20",
+  "total": 30,
+  "text": "set_civ_txt_122",
+  "kind": "civ"
+ },
+ {
+  "grid": "39x48",
+  "total": 30,
+  "text": "set_civ_txt_85",
+  "kind": "civ"
+ },
+ {
+  "grid": "37x36",
+  "total": 30,
+  "text": "set_civ_txt_53",
+  "kind": "civ"
+ },
+ {
+  "grid": "33x32",
+  "total": 30,
+  "text": "set_civ_txt_51",
+  "kind": "civ"
+ },
+ {
+  "grid": "24x17",
+  "total": 30,
+  "text": "set_civ_txt_119",
+  "kind": "civ"
+ },
+ {
+  "grid": "31x08",
+  "total": 29,
+  "text": "set_civ_txt_173",
+  "kind": "civ"
+ },
+ {
+  "grid": "24x13",
+  "total": 24,
+  "text": "set_mil_txt_82",
+  "kind": "mil"
+ },
+ {
+  "grid": "36x45",
+  "total": 30,
+  "text": "set_civ_txt_177",
+  "kind": "civ"
+ },
+ {
+  "grid": "city.c",
+  "total": 29,
+  "text": "set_city_txt_01",
+  "kind": "city"
+ },
+ {
+  "grid": "30x11",
+  "total": 30,
+  "text": "set_civ_txt_70",
+  "kind": "civ"
+ },
+ {
+  "grid": "32x32",
+  "total": 30,
+  "text": "set_civ_txt_06",
+  "kind": "civ"
+ },
+ {
+  "grid": "20x36",
+  "total": 24,
+  "text": "set_mil_txt_07",
+  "kind": "mil"
+ },
+ {
+  "grid": "50x36",
+  "total": 30,
+  "text": "set_civ_txt_191",
+  "kind": "civ"
+ },
+ {
+  "grid": "38x31",
+  "total": 30,
+  "text": "set_civ_txt_208",
+  "kind": "civ"
+ },
+ {
+  "grid": "11x50",
+  "total": 30,
+  "text": "set_civ_txt_162",
+  "kind": "civ"
+ },
+ {
+  "grid": "46x53",
+  "total": 30,
+  "text": "set_civ_txt_150",
+  "kind": "civ"
+ },
+ {
+  "grid": "49x36",
+  "total": 30,
+  "text": "set_civ_txt_188",
+  "kind": "civ"
+ },
+ {
+  "grid": "08x59",
+  "total": 30,
+  "text": "set_civ_txt_123",
+  "kind": "civ"
+ },
+ {
+  "grid": "25x37",
+  "total": 26,
+  "text": "set_mil_txt_53",
+  "kind": "mil"
+ },
+ {
+  "grid": "55x21",
+  "total": 26,
+  "text": "set_mil_txt_56",
+  "kind": "mil"
+ },
+ {
+  "grid": "42x21",
+  "total": 30,
+  "text": "set_civ_txt_120",
+  "kind": "civ"
+ },
+ {
+  "grid": "59x36",
+  "total": 30,
+  "text": "set_civ_txt_07",
+  "kind": "civ"
+ },
+ {
+  "grid": "36x40",
+  "total": 30,
+  "text": "set_civ_txt_197",
+  "kind": "civ"
+ },
+ {
+  "grid": "54x36",
+  "total": 30,
+  "text": "set_civ_txt_24",
+  "kind": "civ"
+ },
+ {
+  "grid": "12x38",
+  "total": 30,
+  "text": "set_civ_txt_203",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs72",
+  "total": 27,
+  "text": "set_dcs_txt_47",
+  "kind": "dcs"
+ },
+ {
+  "grid": "20x11",
+  "total": 30,
+  "text": "set_civ_txt_65",
+  "kind": "civ"
+ },
+ {
+  "grid": "18x17",
+  "total": 30,
+  "text": "set_civ_txt_106",
+  "kind": "civ"
+ },
+ {
+  "grid": "f2m01.baseN02",
+  "total": 24,
+  "text": "f2m01_location_txt_02",
+  "kind": "location"
+ },
+ {
+  "grid": "11x57",
+  "total": 26,
+  "text": "set_mil_txt_65",
+  "kind": "mil"
+ },
+ {
+  "grid": "33x26",
+  "total": 29,
+  "text": "set_civ_txt_212",
+  "kind": "civ"
+ },
+ {
+  "grid": "51x39",
+  "total": 30,
+  "text": "set_civ_txt_23",
+  "kind": "civ"
+ },
+ {
+  "grid": "16x47",
+  "total": 30,
+  "text": "set_civ_txt_215",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs06",
+  "total": 27,
+  "text": "set_dcs_txt_03",
+  "kind": "dcs"
+ },
+ {
+  "grid": "21x38",
+  "total": 30,
+  "text": "set_civ_txt_37",
+  "kind": "civ"
+ },
+ {
+  "grid": "38x12",
+  "total": 24,
+  "text": "set_mil_txt_87",
+  "kind": "mil"
+ },
+ {
+  "grid": "22x09",
+  "total": 25,
+  "text": "set_mil_txt_12",
+  "kind": "mil"
+ },
+ {
+  "grid": "41x42",
+  "total": 30,
+  "text": "set_civ_txt_142",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs52",
+  "total": 27,
+  "text": "set_dcs_txt_28",
+  "kind": "dcs"
+ },
+ {
+  "grid": "city.a",
+  "total": 29,
+  "text": "set_city_txt_02",
+  "kind": "city"
+ },
+ {
+  "grid": "45x55",
+  "total": 30,
+  "text": "set_civ_txt_148",
+  "kind": "civ"
+ },
+ {
+  "grid": "38x35",
+  "total": 30,
+  "text": "set_civ_txt_179",
+  "kind": "civ"
+ },
+ {
+  "grid": "53x39",
+  "total": 30,
+  "text": "set_civ_txt_21",
+  "kind": "civ"
+ },
+ {
+  "grid": "50x37",
+  "total": 30,
+  "text": "set_civ_txt_192",
+  "kind": "civ"
+ },
+ {
+  "grid": "53x16",
+  "total": 30,
+  "text": "set_civ_txt_95",
+  "kind": "civ"
+ },
+ {
+  "grid": "18x28",
+  "total": 30,
+  "text": "set_civ_txt_211",
+  "kind": "civ"
+ },
+ {
+  "grid": "47x51",
+  "total": 30,
+  "text": "set_civ_txt_201",
+  "kind": "civ"
+ },
+ {
+  "grid": "43x52",
+  "total": 24,
+  "text": "set_mil_txt_37",
+  "kind": "mil"
+ },
+ {
+  "grid": "57x57",
+  "total": 24,
+  "text": "set_mil_txt_98",
+  "kind": "mil"
+ },
+ {
+  "grid": "22x46",
+  "total": 24,
+  "text": "set_mil_txt_29",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs09",
+  "total": 27,
+  "text": "set_dcs_txt_04",
+  "kind": "dcs"
+ },
+ {
+  "grid": "62x23",
+  "total": 28,
+  "text": "set_mil_txt_110",
+  "kind": "mil"
+ },
+ {
+  "grid": "09x60",
+  "total": 30,
+  "text": "set_civ_txt_143",
+  "kind": "civ"
+ },
+ {
+  "grid": "04x58",
+  "total": 24,
+  "text": "set_mil_txt_62",
+  "kind": "mil"
+ },
+ {
+  "grid": "45x53",
+  "total": 24,
+  "text": "set_mil_txt_08",
+  "kind": "mil"
+ },
+ {
+  "grid": "f1m07.milehigh",
+  "total": 30,
+  "text": "f1m07_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "38x53",
+  "total": 30,
+  "text": "set_civ_txt_213",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs41",
+  "total": 27,
+  "text": "set_dcs_txt_20",
+  "kind": "dcs"
+ },
+ {
+  "grid": "25x22",
+  "total": 26,
+  "text": "set_mil_txt_83",
+  "kind": "mil"
+ },
+ {
+  "grid": "11x38",
+  "total": 30,
+  "text": "set_civ_txt_50",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs65",
+  "total": 27,
+  "text": "set_dcs_txt_40",
+  "kind": "dcs"
+ },
+ {
+  "grid": "56x27",
+  "total": 30,
+  "text": "set_civ_txt_74",
+  "kind": "civ"
+ },
+ {
+  "grid": "50x08",
+  "total": 26,
+  "text": "set_mil_txt_94",
+  "kind": "mil"
+ },
+ {
+  "grid": "35x30",
+  "total": 30,
+  "text": "set_civ_txt_92",
+  "kind": "civ"
+ },
+ {
+  "grid": "39x50",
+  "total": 24,
+  "text": "set_mil_txt_40",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs42",
+  "total": 27,
+  "text": "set_dcs_txt_21",
+  "kind": "dcs"
+ },
+ {
+  "grid": "49x60",
+  "total": 24,
+  "text": "set_mil_txt_89",
+  "kind": "mil"
+ },
+ {
+  "grid": "50x59",
+  "total": 24,
+  "text": "set_mil_txt_90",
+  "kind": "mil"
+ },
+ {
+  "grid": "25x48",
+  "total": 30,
+  "text": "set_civ_txt_131",
+  "kind": "civ"
+ },
+ {
+  "grid": "19x50",
+  "total": 30,
+  "text": "set_civ_txt_167",
+  "kind": "civ"
+ },
+ {
+  "grid": "19x42",
+  "total": 24,
+  "text": "set_mil_txt_38",
+  "kind": "mil"
+ },
+ {
+  "grid": "km05.hotelbuilding01",
+  "total": 30,
+  "text": "km05_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "43x58",
+  "total": 29,
+  "text": "set_civ_txt_76",
+  "kind": "civ"
+ },
+ {
+  "grid": "10x61",
+  "total": 30,
+  "text": "set_civ_txt_18",
+  "kind": "civ"
+ },
+ {
+  "grid": "41x22",
+  "total": 24,
+  "text": "set_mil_txt_55",
+  "kind": "mil"
+ },
+ {
+  "grid": "40x40",
+  "total": 24,
+  "text": "set_mil_txt_52",
+  "kind": "mil"
+ },
+ {
+  "grid": "11x48",
+  "total": 24,
+  "text": "set_mil_txt_06",
+  "kind": "mil"
+ },
+ {
+  "grid": "47x39",
+  "total": 30,
+  "text": "set_civ_txt_75",
+  "kind": "civ"
+ },
+ {
+  "grid": "07x58",
+  "total": 30,
+  "text": "set_civ_txt_138",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs70",
+  "total": 27,
+  "text": "set_dcs_txt_45",
+  "kind": "dcs"
+ },
+ {
+  "grid": "30x43_1",
+  "total": 30,
+  "text": "set_civ_txt_48",
+  "kind": "civ"
+ },
+ {
+  "grid": "61x14",
+  "total": 28,
+  "text": "set_mil_txt_109",
+  "kind": "mil"
+ },
+ {
+  "grid": "27x15",
+  "total": 24,
+  "text": "set_mil_txt_58",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs59",
+  "total": 27,
+  "text": "set_dcs_txt_35",
+  "kind": "dcs"
+ },
+ {
+  "grid": "16x39",
+  "total": 30,
+  "text": "set_civ_txt_165",
+  "kind": "civ"
+ },
+ {
+  "grid": "f3t12",
+  "total": 28,
+  "text": "set_civ_txt_136",
+  "kind": "civ"
+ },
+ {
+  "grid": "31x06",
+  "total": 29,
+  "text": "set_civ_txt_139",
+  "kind": "civ"
+ },
+ {
+  "grid": "34x45",
+  "total": 30,
+  "text": "set_civ_txt_175",
+  "kind": "civ"
+ },
+ {
+  "grid": "37x42",
+  "total": 30,
+  "text": "set_civ_txt_178",
+  "kind": "civ"
+ },
+ {
+  "grid": "05x41",
+  "total": 30,
+  "text": "set_civ_txt_84",
+  "kind": "civ"
+ },
+ {
+  "grid": "25x06",
+  "total": 30,
+  "text": "set_civ_txt_26",
+  "kind": "civ"
+ },
+ {
+  "grid": "km04.base",
+  "total": 24,
+  "text": "km04_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "22x37",
+  "total": 30,
+  "text": "set_civ_txt_78",
+  "kind": "civ"
+ },
+ {
+  "grid": "32x07",
+  "total": 29,
+  "text": "set_civ_txt_210",
+  "kind": "civ"
+ },
+ {
+  "grid": "49x61",
+  "total": 24,
+  "text": "set_mil_txt_88",
+  "kind": "mil"
+ },
+ {
+  "grid": "48x51",
+  "total": 30,
+  "text": "set_civ_txt_158",
+  "kind": "civ"
+ },
+ {
+  "grid": "f2m08.base",
+  "total": 24,
+  "text": "f2m08_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "31x25",
+  "total": 26,
+  "text": "set_mil_txt_112",
+  "kind": "mil"
+ },
+ {
+  "grid": "45x08",
+  "total": 26,
+  "text": "set_mil_txt_25",
+  "kind": "mil"
+ },
+ {
+  "grid": "53x19",
+  "total": 30,
+  "text": "set_civ_txt_82",
+  "kind": "civ"
+ },
+ {
+  "grid": "32x42",
+  "total": 24,
+  "text": "set_mil_txt_50",
+  "kind": "mil"
+ },
+ {
+  "grid": "52x52",
+  "total": 26,
+  "text": "set_mil_txt_96",
+  "kind": "mil"
+ },
+ {
+  "grid": "56x28",
+  "total": 30,
+  "text": "set_civ_txt_38",
+  "kind": "civ"
+ },
+ {
+  "grid": "f3m05.skyscraper",
+  "total": 24,
+  "text": "f3m05_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "45x36",
+  "total": 30,
+  "text": "set_civ_txt_181",
+  "kind": "civ"
+ },
+ {
+  "grid": "33x28",
+  "total": 29,
+  "text": "set_civ_txt_49",
+  "kind": "civ"
+ },
+ {
+  "grid": "38x22",
+  "total": 30,
+  "text": "set_civ_txt_03",
+  "kind": "civ"
+ },
+ {
+  "grid": "city.b",
+  "total": 29,
+  "text": "set_city_txt_04",
+  "kind": "city"
+ },
+ {
+  "grid": "26x44",
+  "total": 24,
+  "text": "set_mil_txt_47",
+  "kind": "mil"
+ },
+ {
+  "grid": "42x12",
+  "total": 30,
+  "text": "set_civ_txt_198",
+  "kind": "civ"
+ },
+ {
+  "grid": "24x07",
+  "total": 30,
+  "text": "set_civ_txt_10",
+  "kind": "civ"
+ },
+ {
+  "grid": "58x38",
+  "total": 26,
+  "text": "set_civ_txt_59",
+  "kind": "civ"
+ },
+ {
+  "grid": "56x17",
+  "total": 30,
+  "text": "set_civ_txt_108",
+  "kind": "civ"
+ },
+ {
+  "grid": "28x50",
+  "total": 30,
+  "text": "set_civ_txt_172",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs47",
+  "total": 27,
+  "text": "set_dcs_txt_24",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs29",
+  "total": 27,
+  "text": "set_dcs_txt_15",
+  "kind": "dcs"
+ },
+ {
+  "grid": "32x53",
+  "total": 30,
+  "text": "set_civ_txt_124",
+  "kind": "civ"
+ },
+ {
+  "grid": "49x14",
+  "total": 24,
+  "text": "set_mil_txt_01",
+  "kind": "mil"
+ },
+ {
+  "grid": "31x45",
+  "total": 25,
+  "text": "set_mil_txt_27",
+  "kind": "mil"
+ },
+ {
+  "grid": "13x49",
+  "total": 30,
+  "text": "set_civ_txt_68",
+  "kind": "civ"
+ },
+ {
+  "grid": "28x55",
+  "total": 30,
+  "text": "set_civ_txt_127",
+  "kind": "civ"
+ },
+ {
+  "grid": "33x41",
+  "total": 24,
+  "text": "set_mil_txt_75",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs61",
+  "total": 27,
+  "text": "set_dcs_txt_37",
+  "kind": "dcs"
+ },
+ {
+  "grid": "22x24",
+  "total": 30,
+  "text": "set_civ_txt_169",
+  "kind": "civ"
+ },
+ {
+  "grid": "45x41",
+  "total": 30,
+  "text": "set_civ_txt_05",
+  "kind": "civ"
+ },
+ {
+  "grid": "04x60",
+  "total": 30,
+  "text": "set_civ_txt_160",
+  "kind": "civ"
+ },
+ {
+  "grid": "16x27",
+  "total": 30,
+  "text": "set_mil_txt_57",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs64",
+  "total": 27,
+  "text": "set_dcs_txt_39",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs74",
+  "total": 27,
+  "text": "set_dcs_txt_49",
+  "kind": "dcs"
+ },
+ {
+  "grid": "21x16",
+  "total": 24,
+  "text": "set_mil_txt_63",
+  "kind": "mil"
+ },
+ {
+  "grid": "22x55",
+  "total": 26,
+  "text": "set_mil_txt_64",
+  "kind": "mil"
+ },
+ {
+  "grid": "42x33",
+  "total": 24,
+  "text": "set_mil_txt_115",
+  "kind": "mil"
+ },
+ {
+  "grid": "04x61",
+  "total": 30,
+  "text": "set_civ_txt_161",
+  "kind": "civ"
+ },
+ {
+  "grid": "31x43",
+  "total": 30,
+  "text": "set_civ_txt_79",
+  "kind": "civ"
+ },
+ {
+  "grid": "47x35",
+  "total": 30,
+  "text": "set_civ_txt_184",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs45",
+  "total": 27,
+  "text": "set_dcs_txt_23",
+  "kind": "dcs"
+ },
+ {
+  "grid": "28x35",
+  "total": 26,
+  "text": "set_civ_txt_209",
+  "kind": "civ"
+ },
+ {
+  "grid": "21x21",
+  "total": 30,
+  "text": "set_civ_txt_98",
+  "kind": "civ"
+ },
+ {
+  "grid": "23x16",
+  "total": 24,
+  "text": "set_mil_txt_26",
+  "kind": "mil"
+ },
+ {
+  "grid": "km01.base",
+  "total": 24,
+  "text": "km01_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "35x42",
+  "total": 30,
+  "text": "set_civ_txt_132",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs12",
+  "total": 27,
+  "text": "set_dcs_txt_06",
+  "kind": "dcs"
+ },
+ {
+  "grid": "37x30",
+  "total": 24,
+  "text": "set_mil_txt_91",
+  "kind": "mil"
+ },
+ {
+  "grid": "51x52",
+  "total": 26,
+  "text": "set_mil_txt_96",
+  "kind": "mil"
+ },
+ {
+  "grid": "44x53",
+  "total": 30,
+  "text": "set_civ_txt_157",
+  "kind": "civ"
+ },
+ {
+  "grid": "46x38",
+  "total": 30,
+  "text": "set_civ_txt_15",
+  "kind": "civ"
+ },
+ {
+  "grid": "14x47",
+  "total": 30,
+  "text": "set_civ_txt_33",
+  "kind": "civ"
+ },
+ {
+  "grid": "17x19",
+  "total": 30,
+  "text": "set_civ_txt_113",
+  "kind": "civ"
+ },
+ {
+  "grid": "19x08",
+  "total": 24,
+  "text": "set_mil_txt_24",
+  "kind": "mil"
+ },
+ {
+  "grid": "33x23",
+  "total": 24,
+  "text": "set_mil_txt_30",
+  "kind": "mil"
+ },
+ {
+  "grid": "08x41",
+  "total": 25,
+  "text": "set_mil_txt_10",
+  "kind": "mil"
+ },
+ {
+  "grid": "47x20",
+  "total": 24,
+  "text": "set_mil_txt_44",
+  "kind": "mil"
+ },
+ {
+  "grid": "52x53",
+  "total": 26,
+  "text": "set_mil_txt_96",
+  "kind": "mil"
+ },
+ {
+  "grid": "42x23",
+  "total": 30,
+  "text": "set_civ_txt_130",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs23",
+  "total": 27,
+  "text": "set_dcs_txt_12",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs54",
+  "total": 27,
+  "text": "set_dcs_txt_30",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs57",
+  "total": 27,
+  "text": "set_dcs_txt_33",
+  "kind": "dcs"
+ },
+ {
+  "grid": "31x54",
+  "total": 30,
+  "text": "set_civ_txt_36",
+  "kind": "civ"
+ },
+ {
+  "grid": "31x23",
+  "total": 30,
+  "text": "set_civ_txt_04",
+  "kind": "civ"
+ },
+ {
+  "grid": "32x14",
+  "total": 24,
+  "text": "set_mil_txt_49",
+  "kind": "mil"
+ },
+ {
+  "grid": "42x58",
+  "total": 30,
+  "text": "set_civ_txt_02",
+  "kind": "civ"
+ },
+ {
+  "grid": "18x22",
+  "total": 30,
+  "text": "set_civ_txt_13",
+  "kind": "civ"
+ },
+ {
+  "grid": "25x49",
+  "total": 32,
+  "text": "f3s06_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "18x12",
+  "total": 32,
+  "text": "f2s01_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "58x54",
+  "total": 24,
+  "text": "set_mil_txt_81",
+  "kind": "mil"
+ },
+ {
+  "grid": "22x29",
+  "total": 28,
+  "text": "set_mil_txt_103",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs24",
+  "total": 27,
+  "text": "set_dcs_txt_13",
+  "kind": "dcs"
+ },
+ {
+  "grid": "29x21",
+  "total": 30,
+  "text": "set_civ_txt_105",
+  "kind": "civ"
+ },
+ {
+  "grid": "12x42",
+  "total": 30,
+  "text": "set_civ_txt_90",
+  "kind": "civ"
+ },
+ {
+  "grid": "53x13",
+  "total": 32,
+  "text": "f1s02_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "dcs28",
+  "total": 27,
+  "text": "set_dcs_txt_14",
+  "kind": "dcs"
+ },
+ {
+  "grid": "33x08",
+  "total": 30,
+  "text": "set_civ_txt_217",
+  "kind": "civ"
+ },
+ {
+  "grid": "47x50",
+  "total": 30,
+  "text": "set_civ_txt_159",
+  "kind": "civ"
+ },
+ {
+  "grid": "46x54",
+  "total": 30,
+  "text": "set_civ_txt_73",
+  "kind": "civ"
+ },
+ {
+  "grid": "55x15",
+  "total": 30,
+  "text": "set_civ_txt_114",
+  "kind": "civ"
+ },
+ {
+  "grid": "33x54",
+  "total": 24,
+  "text": "set_mil_txt_34",
+  "kind": "mil"
+ },
+ {
+  "grid": "55x18",
+  "total": 30,
+  "text": "set_civ_txt_97",
+  "kind": "civ"
+ },
+ {
+  "grid": "08x44",
+  "total": 30,
+  "text": "set_civ_txt_88",
+  "kind": "civ"
+ },
+ {
+  "grid": "27x57",
+  "total": 30,
+  "text": "set_civ_txt_08",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs32",
+  "total": 27,
+  "text": "set_dcs_txt_16",
+  "kind": "dcs"
+ },
+ {
+  "grid": "36x37",
+  "total": 30,
+  "text": "set_civ_txt_214",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs19",
+  "total": 27,
+  "text": "set_dcs_txt_09",
+  "kind": "dcs"
+ },
+ {
+  "grid": "45x26",
+  "total": 30,
+  "text": "set_civ_txt_45",
+  "kind": "civ"
+ },
+ {
+  "grid": "45x37",
+  "total": 30,
+  "text": "set_civ_txt_182",
+  "kind": "civ"
+ },
+ {
+  "grid": "48x38",
+  "total": 30,
+  "text": "set_civ_txt_12",
+  "kind": "civ"
+ },
+ {
+  "grid": "21x43",
+  "total": 24,
+  "text": "set_mil_txt_59",
+  "kind": "mil"
+ },
+ {
+  "grid": "f2m05.stffront",
+  "total": 30,
+  "text": "f2m05_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "50x12",
+  "total": 24,
+  "text": "set_mil_txt_95",
+  "kind": "mil"
+ },
+ {
+  "grid": "18x42",
+  "total": 29,
+  "text": "set_civ_txt_27",
+  "kind": "civ"
+ },
+ {
+  "grid": "28x21",
+  "total": 30,
+  "text": "set_civ_txt_154",
+  "kind": "civ"
+ },
+ {
+  "grid": "f3m02.radarStation",
+  "total": 24,
+  "text": "f3m02_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "55x61",
+  "total": 24,
+  "text": "set_mil_txt_78",
+  "kind": "mil"
+ },
+ {
+  "grid": "14x46",
+  "total": 24,
+  "text": "set_mil_txt_117",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs55",
+  "total": 27,
+  "text": "set_dcs_txt_31",
+  "kind": "dcs"
+ },
+ {
+  "grid": "41x29",
+  "total": 30,
+  "text": "set_civ_txt_34",
+  "kind": "civ"
+ },
+ {
+  "grid": "51x04",
+  "total": 28,
+  "text": "set_mil_txt_104",
+  "kind": "mil"
+ },
+ {
+  "grid": "47x48",
+  "total": 24,
+  "text": "set_mil_txt_03",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs36",
+  "total": 27,
+  "text": "set_dcs_txt_18",
+  "kind": "dcs"
+ },
+ {
+  "grid": "17x18",
+  "total": 26,
+  "text": "set_mil_txt_80",
+  "kind": "mil"
+ },
+ {
+  "grid": "21x41",
+  "total": 24,
+  "text": "set_mil_txt_119",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs66",
+  "total": 27,
+  "text": "set_dcs_txt_41",
+  "kind": "dcs"
+ },
+ {
+  "grid": "36x51",
+  "total": 30,
+  "text": "set_civ_txt_153",
+  "kind": "civ"
+ },
+ {
+  "grid": "26x59",
+  "total": 24,
+  "text": "set_mil_txt_41",
+  "kind": "mil"
+ },
+ {
+  "grid": "17x51",
+  "total": 30,
+  "text": "set_civ_txt_166",
+  "kind": "civ"
+ },
+ {
+  "grid": "16x37",
+  "total": 26,
+  "text": "set_civ_txt_99",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs15",
+  "total": 27,
+  "text": "set_dcs_txt_08",
+  "kind": "dcs"
+ },
+ {
+  "grid": "50x10",
+  "total": 30,
+  "text": "set_civ_txt_202",
+  "kind": "civ"
+ },
+ {
+  "grid": "38x16",
+  "total": 30,
+  "text": "set_civ_txt_19",
+  "kind": "civ"
+ },
+ {
+  "grid": "45x09",
+  "total": 26,
+  "text": "set_civ_txt_71",
+  "kind": "civ"
+ },
+ {
+  "grid": "20x51",
+  "total": 30,
+  "text": "set_civ_txt_168",
+  "kind": "civ"
+ },
+ {
+  "grid": "36x39",
+  "total": 30,
+  "text": "set_civ_txt_176",
+  "kind": "civ"
+ },
+ {
+  "grid": "49x35",
+  "total": 32,
+  "text": "f2s04_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "42x25",
+  "total": 30,
+  "text": "set_civ_txt_126",
+  "kind": "civ"
+ },
+ {
+  "grid": "40x26",
+  "total": 24,
+  "text": "set_mil_txt_60",
+  "kind": "mil"
+ },
+ {
+  "grid": "26x51",
+  "total": 30,
+  "text": "set_civ_txt_170",
+  "kind": "civ"
+ },
+ {
+  "grid": "37x51",
+  "total": 30,
+  "text": "set_civ_txt_200",
+  "kind": "civ"
+ },
+ {
+  "grid": "33x33",
+  "total": 30,
+  "text": "set_civ_txt_100",
+  "kind": "civ"
+ },
+ {
+  "grid": "f2m01.baseN01",
+  "total": 24,
+  "text": "f2m01_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "32x06",
+  "total": 30,
+  "text": "set_civ_txt_174",
+  "kind": "civ"
+ },
+ {
+  "grid": "43x32",
+  "total": 30,
+  "text": "set_civ_txt_205",
+  "kind": "civ"
+ },
+ {
+  "grid": "51x10",
+  "total": 30,
+  "text": "set_civ_txt_61",
+  "kind": "civ"
+ },
+ {
+  "grid": "13x46",
+  "total": 30,
+  "text": "set_civ_txt_163",
+  "kind": "civ"
+ },
+ {
+  "grid": "20x33",
+  "total": 30,
+  "text": "set_civ_txt_144",
+  "kind": "civ"
+ },
+ {
+  "grid": "39x21",
+  "total": 24,
+  "text": "set_mil_txt_51",
+  "kind": "mil"
+ },
+ {
+  "grid": "19x40",
+  "total": 24,
+  "text": "set_mil_txt_14",
+  "kind": "mil"
+ },
+ {
+  "grid": "54x11",
+  "total": 25,
+  "text": "set_mil_txt_18",
+  "kind": "mil"
+ },
+ {
+  "grid": "40x32",
+  "total": 30,
+  "text": "set_civ_txt_112",
+  "kind": "civ"
+ },
+ {
+  "grid": "21x55",
+  "total": 30,
+  "text": "set_civ_txt_87",
+  "kind": "civ"
+ },
+ {
+  "grid": "42x38",
+  "total": 24,
+  "text": "set_mil_txt_04",
+  "kind": "mil"
+ },
+ {
+  "grid": "59x56",
+  "total": 24,
+  "text": "set_mil_txt_99",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs67",
+  "total": 27,
+  "text": "set_dcs_txt_42",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs68",
+  "total": 27,
+  "text": "set_dcs_txt_43",
+  "kind": "dcs"
+ },
+ {
+  "grid": "49x39",
+  "total": 24,
+  "text": "set_mil_txt_48",
+  "kind": "mil"
+ },
+ {
+  "grid": "50x06",
+  "total": 26,
+  "text": "set_mil_txt_43",
+  "kind": "mil"
+ },
+ {
+  "grid": "21x18",
+  "total": 30,
+  "text": "set_civ_txt_107",
+  "kind": "civ"
+ },
+ {
+  "grid": "55x16",
+  "total": 30,
+  "text": "set_civ_txt_20",
+  "kind": "civ"
+ },
+ {
+  "grid": "39x36",
+  "total": 24,
+  "text": "set_mil_txt_09",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs62",
+  "total": 27,
+  "text": "set_dcs_txt_38",
+  "kind": "dcs"
+ },
+ {
+  "grid": "51x13",
+  "total": 30,
+  "text": "set_civ_txt_40",
+  "kind": "civ"
+ },
+ {
+  "grid": "14x55",
+  "total": 30,
+  "text": "set_civ_txt_115",
+  "kind": "civ"
+ },
+ {
+  "grid": "22x01",
+  "total": 28,
+  "text": "set_mil_txt_102",
+  "kind": "mil"
+ },
+ {
+  "grid": "02x45",
+  "total": 28,
+  "text": "set_mil_txt_100",
+  "kind": "mil"
+ },
+ {
+  "grid": "16x44",
+  "total": 30,
+  "text": "set_civ_txt_14",
+  "kind": "civ"
+ },
+ {
+  "grid": "53x38",
+  "total": 30,
+  "text": "set_civ_txt_28",
+  "kind": "civ"
+ },
+ {
+  "grid": "39x31",
+  "total": 30,
+  "text": "set_civ_txt_57",
+  "kind": "civ"
+ },
+ {
+  "grid": "28x51",
+  "total": 24,
+  "text": "set_mil_txt_42",
+  "kind": "mil"
+ },
+ {
+  "grid": "34x32",
+  "total": 24,
+  "text": "set_mil_txt_76",
+  "kind": "mil"
+ },
+ {
+  "grid": "18x55",
+  "total": 25,
+  "text": "set_mil_txt_69",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs01",
+  "total": 27,
+  "text": "set_dcs_txt_01",
+  "kind": "dcs"
+ },
+ {
+  "grid": "dcs53",
+  "total": 27,
+  "text": "set_dcs_txt_29",
+  "kind": "dcs"
+ },
+ {
+  "grid": "40x11",
+  "total": 25,
+  "text": "set_mil_txt_36",
+  "kind": "mil"
+ },
+ {
+  "grid": "10x60",
+  "total": 30,
+  "text": "set_civ_txt_125",
+  "kind": "civ"
+ },
+ {
+  "grid": "33x31",
+  "total": 25,
+  "text": "set_civ_txt_117",
+  "kind": "civ"
+ },
+ {
+  "grid": "15x50",
+  "total": 30,
+  "text": "set_civ_txt_164",
+  "kind": "civ"
+ },
+ {
+  "grid": "34x30",
+  "total": 30,
+  "text": "set_civ_txt_101",
+  "kind": "civ"
+ },
+ {
+  "grid": "27x54",
+  "total": 24,
+  "text": "set_mil_txt_31",
+  "kind": "mil"
+ },
+ {
+  "grid": "53x30",
+  "total": 30,
+  "text": "set_civ_txt_137",
+  "kind": "civ"
+ },
+ {
+  "grid": "18x35",
+  "total": 30,
+  "text": "set_civ_txt_52",
+  "kind": "civ"
+ },
+ {
+  "grid": "11x52",
+  "total": 30,
+  "text": "set_civ_txt_118",
+  "kind": "civ"
+ },
+ {
+  "grid": "50x38",
+  "total": 30,
+  "text": "set_civ_txt_204",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs14",
+  "total": 27,
+  "text": "set_dcs_txt_07",
+  "kind": "dcs"
+ },
+ {
+  "grid": "53x17",
+  "total": 24,
+  "text": "set_mil_txt_46",
+  "kind": "mil"
+ },
+ {
+  "grid": "21x48",
+  "total": 30,
+  "text": "set_civ_txt_58",
+  "kind": "civ"
+ },
+ {
+  "grid": "57x41",
+  "total": 28,
+  "text": "set_mil_txt_105",
+  "kind": "mil"
+ },
+ {
+  "grid": "33x51",
+  "total": 30,
+  "text": "set_civ_txt_46",
+  "kind": "civ"
+ },
+ {
+  "grid": "16x42",
+  "total": 24,
+  "text": "set_mil_txt_120",
+  "kind": "mil"
+ },
+ {
+  "grid": "31x14",
+  "total": 24,
+  "text": "set_mil_txt_11",
+  "kind": "mil"
+ },
+ {
+  "grid": "46x51",
+  "total": 30,
+  "text": "set_civ_txt_111",
+  "kind": "civ"
+ },
+ {
+  "grid": "58x48",
+  "total": 28,
+  "text": "set_mil_txt_108",
+  "kind": "mil"
+ },
+ {
+  "grid": "53x33",
+  "total": 24,
+  "text": "set_mil_txt_71",
+  "kind": "mil"
+ },
+ {
+  "grid": "46x29",
+  "total": 30,
+  "text": "set_civ_txt_129",
+  "kind": "civ"
+ },
+ {
+  "grid": "19x13",
+  "total": 30,
+  "text": "set_civ_txt_63",
+  "kind": "civ"
+ },
+ {
+  "grid": "36x13",
+  "total": 30,
+  "text": "set_mil_txt_45",
+  "kind": "mil"
+ },
+ {
+  "grid": "58x05",
+  "total": 28,
+  "text": "set_mil_txt_106",
+  "kind": "mil"
+ },
+ {
+  "grid": "17x15",
+  "total": 24,
+  "text": "set_mil_txt_17",
+  "kind": "mil"
+ },
+ {
+  "grid": "56x59",
+  "total": 24,
+  "text": "set_mil_txt_79",
+  "kind": "mil"
+ },
+ {
+  "grid": "km03.tigercamp",
+  "total": 30,
+  "text": "km03_location_txt_02",
+  "kind": "location"
+ },
+ {
+  "grid": "dcs58",
+  "total": 27,
+  "text": "set_dcs_txt_34",
+  "kind": "dcs"
+ },
+ {
+  "grid": "47x38",
+  "total": 30,
+  "text": "set_civ_txt_185",
+  "kind": "civ"
+ },
+ {
+  "grid": "51x37",
+  "total": 30,
+  "text": "set_civ_txt_193",
+  "kind": "civ"
+ },
+ {
+  "grid": "41x27",
+  "total": 24,
+  "text": "set_mil_txt_85",
+  "kind": "mil"
+ },
+ {
+  "grid": "48x08",
+  "total": 30,
+  "text": "set_civ_txt_01",
+  "kind": "civ"
+ },
+ {
+  "grid": "34x33",
+  "total": 30,
+  "text": "set_civ_txt_146",
+  "kind": "civ"
+ },
+ {
+  "grid": "56x15",
+  "total": 24,
+  "text": "set_civ_txt_140",
+  "kind": "civ"
+ },
+ {
+  "grid": "20x44",
+  "total": 24,
+  "text": "set_mil_txt_61",
+  "kind": "mil"
+ },
+ {
+  "grid": "30x43",
+  "total": 30,
+  "text": "set_civ_txt_145",
+  "kind": "civ"
+ },
+ {
+  "grid": "52x32",
+  "total": 30,
+  "text": "set_civ_txt_206",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs56",
+  "total": 27,
+  "text": "set_dcs_txt_32",
+  "kind": "dcs"
+ },
+ {
+  "grid": "34x31",
+  "total": 30,
+  "text": "set_civ_txt_22",
+  "kind": "civ"
+ },
+ {
+  "grid": "47x54",
+  "total": 30,
+  "text": "set_civ_txt_60",
+  "kind": "civ"
+ },
+ {
+  "grid": "35x27",
+  "total": 24,
+  "text": "set_mil_txt_86",
+  "kind": "mil"
+ },
+ {
+  "grid": "43x45",
+  "total": 25,
+  "text": "set_mil_txt_84",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs60",
+  "total": 27,
+  "text": "set_dcs_txt_36",
+  "kind": "dcs"
+ },
+ {
+  "grid": "23x49",
+  "total": 25,
+  "text": "set_mil_txt_28",
+  "kind": "mil"
+ },
+ {
+  "grid": "41x23",
+  "total": 30,
+  "text": "set_civ_txt_207",
+  "kind": "civ"
+ },
+ {
+  "grid": "18x09",
+  "total": 30,
+  "text": "set_civ_txt_30",
+  "kind": "civ"
+ },
+ {
+  "grid": "47x60",
+  "total": 24,
+  "text": "set_mil_txt_13",
+  "kind": "mil"
+ },
+ {
+  "grid": "28x13",
+  "total": 30,
+  "text": "set_civ_txt_43",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs71",
+  "total": 27,
+  "text": "set_dcs_txt_46",
+  "kind": "dcs"
+ },
+ {
+  "grid": "51x59",
+  "total": 24,
+  "text": "set_mil_txt_92",
+  "kind": "mil"
+ },
+ {
+  "grid": "dcs43",
+  "total": 27,
+  "text": "set_dcs_txt_22",
+  "kind": "dcs"
+ },
+ {
+  "grid": "18x11",
+  "total": 25,
+  "text": "set_civ_txt_80",
+  "kind": "civ"
+ },
+ {
+  "grid": "29x20",
+  "total": 30,
+  "text": "set_civ_txt_105",
+  "kind": "civ"
+ },
+ {
+  "grid": "09x61",
+  "total": 30,
+  "text": "set_civ_txt_133",
+  "kind": "civ"
+ },
+ {
+  "grid": "18x27",
+  "total": 30,
+  "text": "set_civ_txt_64",
+  "kind": "civ"
+ },
+ {
+  "grid": "46x36",
+  "total": 30,
+  "text": "set_civ_txt_183",
+  "kind": "civ"
+ },
+ {
+  "grid": "07x39",
+  "total": 24,
+  "text": "set_mil_txt_35",
+  "kind": "mil"
+ },
+ {
+  "grid": "35x46",
+  "total": 30,
+  "text": "set_civ_txt_152",
+  "kind": "civ"
+ },
+ {
+  "grid": "city.d",
+  "total": 29,
+  "text": "set_city_txt_03",
+  "kind": "city"
+ },
+ {
+  "grid": "29x05",
+  "total": 30,
+  "text": "set_civ_txt_93",
+  "kind": "civ"
+ },
+ {
+  "grid": "29x05",
+  "total": 30,
+  "text": "set_civ_txt_93",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs73",
+  "total": 27,
+  "text": "set_dcs_txt_48",
+  "kind": "dcs"
+ },
+ {
+  "grid": "26x56",
+  "total": 32,
+  "text": "f2s07_title_txt",
+  "kind": "title"
+ },
+ {
+  "grid": "58x52",
+  "total": 26,
+  "text": "set_mil_txt_114",
+  "kind": "mil"
+ },
+ {
+  "grid": "10x46",
+  "total": 24,
+  "text": "set_mil_txt_05",
+  "kind": "mil"
+ },
+ {
+  "grid": "58x21",
+  "total": 28,
+  "text": "set_mil_txt_107",
+  "kind": "mil"
+ },
+ {
+  "grid": "53x18",
+  "total": 30,
+  "text": "set_civ_txt_96",
+  "kind": "civ"
+ },
+ {
+  "grid": "56x29",
+  "total": 30,
+  "text": "set_civ_txt_54",
+  "kind": "civ"
+ },
+ {
+  "grid": "49x10",
+  "total": 30,
+  "text": "set_civ_txt_39",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs04",
+  "total": 27,
+  "text": "set_dcs_txt_02",
+  "kind": "dcs"
+ },
+ {
+  "grid": "06x48",
+  "total": 30,
+  "text": "set_civ_txt_104",
+  "kind": "civ"
+ },
+ {
+  "grid": "35x36",
+  "total": 24,
+  "text": "set_mil_txt_02",
+  "kind": "mil"
+ },
+ {
+  "grid": "25x60",
+  "total": 30,
+  "text": "set_civ_txt_25",
+  "kind": "civ"
+ },
+ {
+  "grid": "53x26",
+  "total": 30,
+  "text": "set_civ_txt_35",
+  "kind": "civ"
+ },
+ {
+  "grid": "f3m04.fryme",
+  "total": 24,
+  "text": "f3m04_location_txt_01",
+  "kind": "location"
+ },
+ {
+  "grid": "42x42",
+  "total": 30,
+  "text": "set_civ_txt_180",
+  "kind": "civ"
+ },
+ {
+  "grid": "14x50",
+  "total": 30,
+  "text": "set_civ_txt_72",
+  "kind": "civ"
+ },
+ {
+  "grid": "48x36",
+  "total": 24,
+  "text": "set_mil_txt_39",
+  "kind": "mil"
+ },
+ {
+  "grid": "37x35",
+  "total": 30,
+  "text": "set_civ_txt_77",
+  "kind": "civ"
+ },
+ {
+  "grid": "35x37",
+  "total": 30,
+  "text": "set_civ_txt_55",
+  "kind": "civ"
+ },
+ {
+  "grid": "23x20",
+  "total": 30,
+  "text": "set_civ_txt_147",
+  "kind": "civ"
+ },
+ {
+  "grid": "25x14",
+  "total": 30,
+  "text": "set_civ_txt_83",
+  "kind": "civ"
+ },
+ {
+  "grid": "24x20",
+  "total": 30,
+  "text": "set_civ_txt_149",
+  "kind": "civ"
+ },
+ {
+  "grid": "09x37",
+  "total": 30,
+  "text": "set_civ_txt_31",
+  "kind": "civ"
+ },
+ {
+  "grid": "58x33",
+  "total": 30,
+  "text": "set_civ_txt_11",
+  "kind": "civ"
+ },
+ {
+  "grid": "dcs49",
+  "total": 27,
+  "text": "set_dcs_txt_25",
+  "kind": "dcs"
+ }
+]

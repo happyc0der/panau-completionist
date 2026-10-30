@@ -1,0 +1,25 @@
+[project]
+name = "panau-completionist"
+version = "1.0.0"
+description = "Just Cause 2 (Steam, PC) completionist tools: best-of-both save merge, real-time arrows to every remaining collectible and sabotage target, infinite health/ammo, wingsuit installer, crash fix."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = []
+classifiers = ["Operating System :: Microsoft :: Windows", "Programming Language :: Python :: 3"]
+
+[project.scripts]
+panau = "panau.cli:main"
+
+[project.gui-scripts]
+panau-launch = "panau.launch:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["panau", "panau.save", "panau.game", "panau.data"]
+
+[tool.setuptools.package-data]
+"panau.data" = ["*.json", "*.json.gz"]
