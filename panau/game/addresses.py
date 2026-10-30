@@ -43,6 +43,7 @@ MARKER_HEAD, MARKER_VTABLE = 0x011910A0, 0x00EB8FA4
 MARKER_NEXT, MARKER_GROUP, MARKER_STATUS, MARKER_TYPE, MARKER_POS = 0x40, 0x28, 0x4C, 0x50, 0xB4
 MARKER_SABOTAGE = 0x11                # status bit 0 = standing; it clears the instant the target is destroyed
 MARKER_PANEL = 0x15                   # interaction marker (pipeline control panels)
+MARKER_PANEL_USED = 0x13              # a pipeline panel's marker turns into this the moment it is sabotaged
 MARKER_ITEMS = {0x01: 'weapon part', 0x02: 'vehicle part', 0x0C: 'cash', 0x1D: 'armor'}
 
 # --- the in-memory progress table (same layout as the save's world section) ---------------------------------------------
