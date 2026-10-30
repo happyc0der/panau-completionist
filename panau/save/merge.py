@@ -8,7 +8,8 @@ What is merged (each step was verified in game: the game's next autosave kept it
   - SAM sites: destroyed in the other save -> destroyed in the base
   - settlement counters: credited with the objects brought over (the game trusts these counters, it never recounts)
   - location discovery flags, stats (records and counters), flags59, black market unlocks, activities (missions,
-    races, stunts; best race times): the better of the two
+    races, stunts, faction items; best race times): the better of the two
+  - faction item counters (stats 333-336, 370): recounted from the merged activity list
   - difficulty: the higher of the two (or what you pass)
 Missions and faction progress stay the base's unless take_missions=True (implemented, but not verified in game:
 pick the save with the furthest story as the base).
@@ -19,7 +20,7 @@ import collections
 import struct
 
 from panau import data
-from panau.save import sections, world
+from panau.save import progress, sections, world
 from panau.save.format import Save, item_lists, u32
 
 RESOURCE_STATS = {'e1162daa': 326, 'e6fb1698': 327, '5353acb9': 328, 'f8fc3159': 329}   # item list 2 key -> stat
@@ -98,6 +99,10 @@ def merge(base_path, other_path, difficulty=None, take_missions=False):
 
     # 6. the rest: the better of the two
     base['activities'] = sections.merge_activities(base['activities'], other['activities'])
+    # faction items are one-item activities: their counters must count the merged list, not the larger of two counts
+    fixed = progress.fix_faction_counters(base)
+    report.append(f'faction items: {sum(progress.faction_items(base).values())} of 300' +
+                  (f' (counters recounted: {fixed})' if fixed else ''))
     base['flags59'] = sections.merge_flags59(base['flags59'], other['flags59'])
     base['unlocks'] = sections.merge_unlocks(base['unlocks'], other['unlocks'])
     report.append(f'black market unlocks: {u32(dict(base["unlocks"])[0])} + {u32(dict(base["unlocks"])[8])}')

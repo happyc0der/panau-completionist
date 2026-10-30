@@ -20,7 +20,7 @@ panau config unlock always  # only if they don't want the "earned" unlock
 
 | Tool | Proof it works |
 |---|---|
-| save merge | `panau merge A B` dry run prints counts; after writing and loading in game, the game's next autosave (Save00, rewritten seconds after a load) still has the same collectible count and difficulty; `panau audit A B` exits 0 |
+| save merge | `panau merge A B` dry run prints counts; after writing and loading in game, the game's next autosave (Save00, rewritten seconds after a load) still has the same collectible count and difficulty; `panau audit A B` exits 0 (it also checks the faction item counters; `panau repair --write` fixes a save merged with 1.0) |
 | overlay | with the game running and unlocked, `panau overlay` shows red/white arrows; destroying a nearby target removes its arrow within ~0.3 s |
 | cheats | `panau cheats` while in game: health stays full under fire; a clip never empties |
 | unlock | `panau` prints `unlock: earned: ...` or `locked: ...` with the reason |

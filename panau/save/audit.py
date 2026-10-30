@@ -2,12 +2,13 @@
 
 objectives(): per completion-target kind, how many are done in one of the other saves but not in this one.
 sections(): for every mergeable section, whether merging the other save in would still change anything.
+counters(): counters in the save that disagree with its own records (faction items after a 1.0 merge).
 """
 import collections
 import struct
 
 from panau import data
-from panau.save import sections as S, world
+from panau.save import progress, sections as S, world
 from panau.save.format import Save
 
 
@@ -46,6 +47,12 @@ GAME_MANAGED = {'stats': {315, 330}}
 MERGEABLE = {'stats': S.merge_stats, 'flags59': S.merge_flags59, 'unlocks': S.merge_unlocks,
              'locations': S.merge_location_flags, 'activities': S.merge_activities,
              'factions': S.merge_factions, 'main': S.merge_main}
+
+
+def counters(current_path):
+    """Counters that disagree with what the save itself records as done: {stat: (now, should be)}.
+    (`panau repair` fixes them.)"""
+    return progress.faction_counter_fixes(Save.load(current_path))
 
 
 def sections(current_path, other_paths):

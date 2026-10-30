@@ -77,7 +77,35 @@ def cmd_audit(a):
     print('  completion targets done elsewhere but not here:', misses or 'none')
     diffs = {k: v for k, v in audit.sections(current, a.others).items() if v}
     print('  sections where another save is better:', diffs or 'none')
-    return 0 if not misses and not diffs else 1
+    wrong = audit.counters(current)
+    print('  counters that disagree with the save (stat: now, should be):', wrong or 'none')
+    if wrong:
+        print('  fix them with: panau repair --write')
+    return 0 if not misses and not diffs and not wrong else 1
+
+
+def cmd_repair(a):
+    from panau.game.memory import find_pid
+    from panau.save import progress
+    from panau.save.format import Save, u32
+    path = a.save or steam.newest_save()
+    s = Save.load(path)
+    fixes = progress.fix_faction_counters(s)
+    print(f'{path}: faction item counters (stat: now -> should be):',
+          ', '.join(f'{k}: {old} -> {new}' for k, (old, new) in fixes.items()) or 'all correct')
+    if not fixes or not a.write:
+        if fixes:
+            print('(dry run: nothing written; pass --write to fix the file)')
+        return 0
+    if os.path.abspath(os.path.dirname(path)) == os.path.abspath(steam.save_dir()) and find_pid():
+        print('close Just Cause 2 first: it would overwrite the save on its next autosave')
+        return 1
+    out = s.to_bytes(difficulty=s.difficulty, money=u32(dict(s['main'])[4]))
+    kept = _backup_once(path)
+    with open(path, 'wb') as f:
+        f.write(out)
+    print(f'written: {path}' + (f' (the previous file is kept at {kept})' if kept else ''))
+    return 0
 
 
 def _gated(fn, *args):
@@ -162,6 +190,10 @@ def main(argv=None):
     au.add_argument('others', nargs='+', help='the original saves')
     au.add_argument('--save', help='the save to check (default: your newest)')
     au.set_defaults(fn=cmd_audit)
+    r = sub.add_parser('repair', help='fix counters a 1.0 merge got wrong (faction items); dry run unless --write')
+    r.add_argument('--save', help='the save to fix (default: your newest)')
+    r.add_argument('--write', action='store_true', help='write the fix into the file (the game must be closed)')
+    r.set_defaults(fn=cmd_repair)
     o = sub.add_parser('overlay', help='on-screen arrows (the game must be running)')
     o.add_argument('--wait', action='store_true', help='wait for the game window first')
     o.set_defaults(fn=cmd_overlay)

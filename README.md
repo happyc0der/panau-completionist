@@ -28,7 +28,7 @@ Then run `panau`. It shows what it found: the game folder, your save folder, you
 unlock is earned.
 
 ```text
-panau-completionist 1.0.0
+panau-completionist 1.1.0
   game       D:\SteamLibrary\steamapps\common\Just Cause 2
   saves      C:\Program Files (x86)\Steam\userdata\<id>\8190\remote
   save       JustCause2Save00.sav: Hardcore, story finished, 1306 collectibles
@@ -69,11 +69,16 @@ Your saves live in `Steam\userdata\<id>\8190\remote`. Save00 is the autosave (**
    Whatever was in that slot is kept once in `%APPDATA%\panau-completionist\backups`.
 4. Load it in game. The game rewrites the autosave right after loading; if it didn't like something it resets
    the save there, so check your % and collectible count look right.
-5. `panau audit base.sav other.sav` confirms the result holds everything both had.
+5. `panau audit base.sav other.sav` confirms the result holds everything both had, and that its counters agree
+   with what it records as done.
 
 What comes over: collectibles, destroyed objects (all 3,559 sabotage targets the game tracks), SAM sites,
-settlement counters and discovery, races and other activities (best times too), stats, black market unlocks and
-the higher difficulty. Missions and faction progress stay the base's; `--take-missions` merges them too
+settlement counters and discovery, races and other activities (best times too), faction items (skulls, black
+boxes, drug drops; their counters are recounted), stats, black market unlocks and the higher difficulty.
+
+**Merged with 1.0?** It took the larger of the two saves' faction item counters instead of counting both, so the
+game can show a few faction items missing that never appear on the map (they are already picked up). Close the
+game and run `panau repair` (dry run) and `panau repair --write` to recount them. Missions and faction progress stay the base's; `--take-missions` merges them too
 (experimental, not verified in game).
 
 ## Wingsuit
