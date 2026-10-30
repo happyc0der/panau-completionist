@@ -271,6 +271,31 @@ def counters(targets, by_group):
     return out
 
 
+# counter names that are no settlement's grid, matched to the settlement whose counter equals what they credit in both
+# unmerged test saves (Casual, Hardcore): offset 0 in both, the airport a steady +1. km03 has two candidates by name.
+SETTLEMENT_ALIASES = {'panauAirport': 'f1m03.interiors', 'mileHigh': 'f1m07.milehigh', 'f2m08.resource': 'f2m08.base',
+                      'km03': 'km03.gamblingHouse'}
+
+
+def resolve_settlements(cnt, settlements):
+    """'<name>.count.up' names its settlement's grid, or for story and faction locations only its first part: 'f3m04'
+    raises Cape Carnival, grid 'f3m04.fryme'. A name matching no settlement (a map cell without one, a stronghold)
+    raises nothing the game shows, so it is dropped."""
+    grids = {s['grid'] for s in settlements}
+
+    def resolve(name):
+        if name in grids or name in SETTLEMENT_ALIASES:
+            return SETTLEMENT_ALIASES.get(name, name)
+        found = [g for g in grids if g.lower().startswith(name.lower() + '.')]
+        return found[0] if len(found) == 1 else None
+    out = {}
+    for g, (kind, name) in cnt.items():
+        grid = resolve(name) if name else None
+        if kind is not None or grid:
+            out[g] = [kind, grid]
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--game', help='Just Cause 2 folder (default: found through Steam)')
@@ -284,6 +309,7 @@ def main():
         game = steam.game_dir()
     targets, cells, link, cnt = build(game)
     sett = settlements(game)
+    cnt = resolve_settlements(cnt, sett)
     print(f'targets {len(targets["targets"])} ignored {len(targets["ignored"])} settlements {len(sett)} pipelines {len(link)}')
     if a.counters:
         shipped = {t['group'] for t in json.load(gzip.open(os.path.join(a.out, 'targets.json.gz'), 'rt', encoding='utf-8'))['targets']}
