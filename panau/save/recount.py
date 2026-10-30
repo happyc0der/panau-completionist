@@ -147,7 +147,9 @@ def describe(fx):
     out, sett = [], []
     for (kind, k), (old, new) in sorted(fx.items(), key=lambda kv: (kv[0][0] != 'stat', kv[0][1])):
         if kind == 'stat':
-            name = names.get(k) or (f'{labels[k].most_common(1)[0][0]}s destroyed' if k in labels else f'stat {k}')
+            label = labels[k].most_common(1)[0][0] if k in labels else None
+            plural = {'propaganda': 'propaganda trailers'}.get(label, f'{label}s')
+            name = names.get(k) or (f'{plural} destroyed' if label else f'stat {k}')
             out.append(f'{name} (stat {k}): {old} -> {new}')
         else:
             sett.append(f'{settlements[k]["grid"]} {old}->{new}')
