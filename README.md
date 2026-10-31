@@ -28,7 +28,7 @@ Then run `panau`. It shows what it found: the game folder, your save folder, you
 unlock is earned.
 
 ```text
-panau-completionist 1.3.2
+panau-completionist 1.3.3
   game       D:\SteamLibrary\steamapps\common\Just Cause 2
   saves      C:\Program Files (x86)\Steam\userdata\<id>\8190\remote
   save       JustCause2Save00.sav: Hardcore, story finished, 1306 collectibles
