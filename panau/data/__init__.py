@@ -3,7 +3,7 @@ README). Positions are world coordinates in metres (x east, y up, z north).
 
 - targets.json.gz       every completion target: collectibles (weapon/vehicle/armor parts, cash) and sabotage targets
                         (the groups the game itself tags with an "act_*" objective marker), plus propaganda trailers and
-                        pipelines; "ignored" = parked helicopters that carry a marker but should not get arrows
+                        pipelines; "ignored" = objectives that carry a marker but never count (mission props, untracked depots)
 - done_flags.json       world-table type key -> the bit value that means destroyed/collected (see save/world.py)
 - pipeline_panels.json  pipeline control panel group -> pipeline group (pipelines are sabotaged at the panel)
 - settlements.json      the 405 locations; a save's location id is the index in this list

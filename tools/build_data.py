@@ -12,7 +12,9 @@ What it builds:
                         mission's own props (enabled only during it) and the 8 untracked fuel depots of outposts dfd38 and dfd94
                         (neither is ever in the game's progress table), plus
                         propaganda trailer spawn points and pipelines (sabotaged at a control panel)
-                        ignored: parked helicopters (GB017b cockpits), which carry a marker but should not get arrows
+                        ignored: objectives that never count (mission props, untracked outpost depots), so the
+                        overlay knows their markers. The GB017b 'cockpit' silos DO count (silo tally and their
+                        settlement's counter; 16 = 16 and 72 = 72 in the test saves), so they are targets.
   settlements.json      the 405 locations in settlements.bin order (= a save's location id)
   group_cells.json.gz   target group -> placement cell (file stem), for crediting settlement counters in merges
   pipeline_panels.json  control panel group -> pipeline group
@@ -33,7 +35,6 @@ import json
 import math
 import os
 import re
-import statistics
 import struct
 import sys
 import zlib
@@ -211,7 +212,6 @@ def build(game):
             by_group[o[2]].append(o)
     names = {g: {o[1] for o in os_ if o[1]} for g, os_ in by_group.items()}
     classes = {g: {o[0] for o in os_} for g, os_ in by_group.items()}
-    world_pos = lambda os_: tuple(round(statistics.median(o[3][i] for o in os_), 2) for i in range(3))
 
     targets, ignored, cells = [], [], {}
     for g, os_ in by_group.items():                                    # collectibles
@@ -229,9 +229,7 @@ def build(game):
         kind = tins[0][1]
         marker_pos = list(tins[0][0][3])                             # the arrow points at the objective marker
         text = [v for o in os_ for v in o[4].values() if isinstance(v, str)]
-        if 'geo.GB017b' in names[g]:                                   # parked helicopters
-            ignored.append({'label': 'helicopter', 'group': g, 'pos': list(world_pos(os_))})
-        elif any(MISSION_ONLY.search(s) for s in text):                # exists only during its mission (f3t05's silo)
+        if any(MISSION_ONLY.search(s) for s in text):                # exists only during its mission (f3t05's silo)
             ignored.append({'label': 'mission prop', 'group': g, 'pos': marker_pos})
         elif g in UNTRACKED:
             ignored.append({'label': 'untracked fuel depot', 'group': g, 'pos': marker_pos})

@@ -28,7 +28,7 @@ Then run `panau`. It shows what it found: the game folder, your save folder, you
 unlock is earned.
 
 ```text
-panau-completionist 1.3.4
+panau-completionist 1.3.5
   game       D:\SteamLibrary\steamapps\common\Just Cause 2
   saves      C:\Program Files (x86)\Steam\userdata\<id>\8190\remote
   save       JustCause2Save00.sav: Hardcore, story finished, 1306 collectibles
@@ -72,7 +72,7 @@ Your saves live in `Steam\userdata\<id>\8190\remote`. Save00 is the autosave (**
 5. `panau audit base.sav other.sav` confirms the result holds everything both had, and that none of its tallies is
    short of what it records as done.
 
-What comes over: collectibles, destroyed objects (all 3,550 sabotage targets the game tracks), SAM sites (also ones
+What comes over: collectibles, destroyed objects (all 3,568 sabotage targets the game tracks), SAM sites (also ones
 the base save has no record of yet), settlement counters and discovery, races and other activities (best times too),
 faction items (skulls, black boxes, drug drops), stats, black market unlocks and the higher difficulty. Missions and
 faction progress stay the base's; `--take-missions` merges them too (experimental, not verified in game).

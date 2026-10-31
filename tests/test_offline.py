@@ -53,6 +53,7 @@ class Data(unittest.TestCase):
         self.assertGreater(sum(1 for k, *_ in t if k == 'sabotage'), 3500)
         # never counted: faction mission f3t05's silo, an untracked fuel depot of outpost dfd38
         self.assertFalse({0x19cf089e, 0x92c5e845} & {g for _, _, g, _ in t})
+        self.assertIn(0x4c7a9524, {g for _, l, g, _ in t if l == 'silo'})   # a GB017b 'cockpit' silo: it counts
         self.assertEqual(len({g for _, _, g, _ in t}), len(t))
         self.assertTrue(all(abs(p[0]) < 17000 and abs(p[2]) < 17000 for *_, p in t))
 
