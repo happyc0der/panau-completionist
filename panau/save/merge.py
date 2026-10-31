@@ -36,29 +36,38 @@ def settlement_cells():
     return out
 
 
-def merge(base_path, other_path, difficulty=None, take_missions=False):
-    """Returns (merged file bytes, report lines). Nothing is written."""
-    base, other = Save.load(base_path), Save.load(other_path)
-    report = []
+def bring_over(base, other, rewrite_collected=True):
+    """Every completion target done in `other` and not in `base` gets other's world-table state (all of its type
+    keys), and the collectibles among them other's collected-list ids. Edits base in place. Returns (groups brought
+    over, collected ids added, collected list size). rewrite_collected=False leaves the collected list untouched when
+    nothing is added."""
     target_groups = {g for _, _, g, _ in data.targets()}
-
-    # 1. objects done in the other save
     wa, wb = world.states(base['world']), world.states(other['world'])
     new_groups = [g for g, st in wb.items()
                   if g in target_groups and world.is_done(st) and not world.is_done(wa.get(g, {}))]
-    base['world'] = world.copy_groups(base['world'], wb, new_groups)
+    if new_groups:
+        base['world'] = world.copy_groups(base['world'], wb, new_groups)
     new_set = set(new_groups)
-    labels = {g: l for _, l, g, _ in data.targets()}
-    report.append(f'objects brought over: {len(new_groups)} ' +
-                  str(dict(collections.Counter(labels[g] for g in new_groups).most_common())))
-
-    # 2. collected list
     ca = {d for k, d in base['collected'] if k}
     cb = {d for k, d in other['collected'] if k}
     add = {v for v in cb - ca if struct.unpack('<I', v[4:])[0] in new_set}
     ids = sorted(ca | add, key=lambda v: (struct.unpack('<I', v[4:])[0], struct.unpack('<I', v[:4])[0]))
-    base['collected'] = [(0, struct.pack('<I', len(ids)))] + [(i + 1, v) for i, v in enumerate(ids)]
-    report.append(f'collectibles brought over: {len(add)} (total {len(ids)})')
+    if add or rewrite_collected:
+        base['collected'] = [(0, struct.pack('<I', len(ids)))] + [(i + 1, v) for i, v in enumerate(ids)]
+    return new_groups, add, len(ids)
+
+
+def merge(base_path, other_path, difficulty=None, take_missions=False):
+    """Returns (merged file bytes, report lines). Nothing is written."""
+    base, other = Save.load(base_path), Save.load(other_path)
+    report = []
+
+    # 1-2. objects done in the other save, and the collected list
+    new_groups, add, total = bring_over(base, other)
+    labels = {g: l for _, l, g, _ in data.targets()}
+    report.append(f'objects brought over: {len(new_groups)} ' +
+                  str(dict(collections.Counter(labels[g] for g in new_groups).most_common())))
+    report.append(f'collectibles brought over: {len(add)} (total {total})')
 
     # 3. stats: the better of the two, then the resource counters = base + what was brought over
     kind = {}

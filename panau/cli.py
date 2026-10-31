@@ -93,14 +93,26 @@ def cmd_repair(a):
     originals = [Save.load(p) for p in a.originals or ()]
     if not originals:
         print('(no --originals: offsets taken as 0, so only exact tallies like the faction items are fixed)')
+    from panau import data
+    from panau.save import merge, world
+    labels = {g: lab for _, lab, g, _ in data.targets()}
     status = 0
     for path in a.save or [steam.newest_save()]:
         s = Save.load(path)
+        # anything an original has done that this save lacks (a merge made with older data could not see it)
+        brought, sams = [], 0
+        for o in originals:
+            groups, _, _ = merge.bring_over(s, o, rewrite_collected=False)
+            s['items'], n = world.mark_sams(s['items'], world.sam_done(o['items']) - world.sam_done(s['items']), o['items'])
+            brought += groups; sams += n
         fx = recount.fixes(s, originals)
-        print(f'{path}: {len(fx)} tallies short' + (':' if fx else ''))
+        print(f'{path}: {len(brought)} objects and {sams} SAM sites to bring over from the originals, '
+              f'{len(fx)} tallies short' + (':' if brought or fx else ''))
+        for g in brought:
+            print(f'   {labels.get(g, "object")} {g:08x}: done in an original save, not here')
         for line in recount.describe(fx):
             print('  ', line)
-        if not fx or not a.write:
+        if not (brought or sams or fx) or not a.write:
             continue
         if os.path.abspath(os.path.dirname(path)) == os.path.abspath(steam.save_dir()) and find_pid():
             print('close Just Cause 2 first: it would overwrite the save on its next autosave')
@@ -201,8 +213,8 @@ def main(argv=None):
     au.add_argument('others', nargs='+', help='the original saves')
     au.add_argument('--save', help='the save to check (default: your newest)')
     au.set_defaults(fn=cmd_audit)
-    r = sub.add_parser('repair', help='raise the tallies a merge made before 1.3 left short (faction items, locations, '
-                                      'per-type and settlement counters); dry run unless --write')
+    r = sub.add_parser('repair', help='fix a save merged with an older version: bring over what the originals have '
+                                      'done, raise short tallies; dry run unless --write')
     r.add_argument('--save', nargs='+', help='the save(s) to fix (default: your newest)')
     r.add_argument('--originals', nargs=2, metavar=('BASE', 'OTHER'),
                    help='the two saves that were merged (their offsets make the recount exact)')
