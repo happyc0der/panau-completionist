@@ -28,7 +28,7 @@ Then run `panau`. It shows what it found: the game folder, your save folder, you
 unlock is earned.
 
 ```text
-panau-completionist 1.3.5
+panau-completionist 1.4.0
   game       D:\SteamLibrary\steamapps\common\Just Cause 2
   saves      C:\Program Files (x86)\Steam\userdata\<id>\8190\remote
   save       JustCause2Save00.sav: Hardcore, story finished, 1306 collectibles
@@ -92,8 +92,9 @@ panau repair --save File1.sav File2.sav --originals base.sav other.sav --write  
 
 `--originals` are the two saves you merged. With them the repair also brings over anything they have done that the
 save lacks (a merge made with older data could miss an object it didn't recognise as done), and their offsets make
-the recount exact; without them only exact tallies like the faction items are fixed. A repair only ever adds
-progress and raises tallies, and running it again changes nothing.
+the recount exact; without them only exact tallies like the faction items are fixed. If your map shows everything ticked but the game stays below 100%, add
+`--assume-complete` to also credit all settlements and crate parts, which a save cannot prove. A repair only ever
+adds progress and raises tallies, and running it again changes nothing.
 
 ## Wingsuit
 

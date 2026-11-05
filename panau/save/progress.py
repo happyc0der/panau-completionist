@@ -37,6 +37,12 @@ def faction_items(save):
                    for n in range(100)) for k in FACTION_ITEMS}
 
 
+def faction_missions(save):
+    """Faction missions and tasks completed (activities f<1-3><m|t>NN, 49 in all), what stat 323 counts."""
+    names = (f'f{i}{t}{n:02d}' for i in '123' for t in 'mt' for n in range(30))
+    return sum(bool((activity_status(save, struct.pack('<I', hashlittle(x.encode()))) or 0) & COMPLETED) for x in names)
+
+
 def summary(save):
     return {
         'difficulty': save.difficulty,

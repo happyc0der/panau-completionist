@@ -105,7 +105,7 @@ def cmd_repair(a):
             groups, _, _ = merge.bring_over(s, o, rewrite_collected=False)
             s['items'], n = world.mark_sams(s['items'], world.sam_done(o['items']) - world.sam_done(s['items']), o['items'])
             brought += groups; sams += n
-        fx = recount.fixes(s, originals)
+        fx = recount.fixes(s, originals, a.assume_complete)
         print(f'{path}: {len(brought)} objects and {sams} SAM sites to bring over from the originals, '
               f'{len(fx)} tallies short' + (':' if brought or fx else ''))
         for g in brought:
@@ -122,7 +122,7 @@ def cmd_repair(a):
         kept = _backup_once(path)
         with open(path, 'wb') as f:
             f.write(out)
-        left = recount.fixes(Save.load(path), originals)
+        left = recount.fixes(Save.load(path), originals, a.assume_complete)
         print('  written' + (f' (the previous file is kept at {kept})' if kept else '') +
               ('; re-checked: nothing left short' if not left else f'; STILL SHORT: {left}'))
         status |= bool(left)
@@ -218,6 +218,8 @@ def main(argv=None):
     r.add_argument('--save', nargs='+', help='the save(s) to fix (default: your newest)')
     r.add_argument('--originals', nargs=2, metavar=('BASE', 'OTHER'),
                    help='the two saves that were merged (their offsets make the recount exact)')
+    r.add_argument('--assume-complete', action='store_true',
+                   help='your map shows everything ticked: also credit all settlements and crate parts, which a save cannot prove')
     r.add_argument('--write', action='store_true', help='write the fix into the file (the game must be closed)')
     r.set_defaults(fn=cmd_repair)
     o = sub.add_parser('overlay', help='on-screen arrows (the game must be running)')

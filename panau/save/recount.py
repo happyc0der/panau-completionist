@@ -7,6 +7,10 @@ only ever adds 1 to, per event:
   - each activity type's "destroyed" count: stat 349 + 3 * type (fuel depots = type 01 -> 352, generators = 17 -> 400)
   - collectibles: stats 326 (weapon parts), 327 (vehicle parts), 328 (armor), 329 (cash); the total in 331
   - each settlement's counter (its completion), raised by the '<settlement>.count.up' events of its objects
+  - faction missions and tasks: stat 323; all sabotage targets: stat 332
+The game's completion % (exe 0x693bd0, totals in Achievements.bin) is 7*story(322)/7 + 10*faction missions(323)/49 +
+10*faction items(336)/300 + 9*strongholds(324)/9 + 7*races(337)/75 + 10*settlements completed(318)/368 +
+20*parts and cash(331)/2700 + 20*sabotage(332)/3501 + 7*black market vehicles/50, each capped at 1.
 A merge that brings progress over from another save without its tallies leaves them short: the game then shows
 things missing that are already done and never come back.
 
@@ -24,12 +28,16 @@ from collections import Counter
 from panau import data
 from panau.save import sections, world
 from panau.save.format import u32
-from panau.save.progress import FACTION_ITEMS, FACTION_TOTALS, faction_items
+from panau.save.progress import FACTION_ITEMS, FACTION_TOTALS, faction_items, faction_missions
 
 DISCOVERED = 316
 RESOURCE = {'weapon part': 326, 'vehicle part': 327, 'armor': 328, 'cash': 329}
 RESOURCE_TOTAL = 331
 TYPE_BASE = 349
+FACTION_MISSIONS, SABOTAGE_TOTAL, SETTLEMENTS_COMPLETE = 323, 332, 318
+# what the game's completion formula needs of the two tallies a save's records cannot prove: settlements completed (no
+# save flag for it) and parts including those from crates (not in the target list). Only set on request (assume_complete).
+COMPLETE = {SETTLEMENTS_COMPLETE: 368, 326: 950, 327: 900, RESOURCE_TOTAL: 2700}
 
 
 def _type_stat(t):
@@ -52,6 +60,8 @@ def counted(save):
             done = world.is_done(w.get(g, {}))
         if not done:
             continue
+        if kind == 'sabotage':
+            out[('stat', SABOTAGE_TOTAL)] += 1
         if kind == 'item' and label in RESOURCE:
             out[('stat', RESOURCE[label])] += 1
             out[('stat', RESOURCE_TOTAL)] += 1
@@ -66,6 +76,7 @@ def counted(save):
     for stat in FACTION_TOTALS:
         out[('stat', stat)] = sum(found.values())
     out[('stat', DISCOVERED)] = len(sections.discovered(save['locations']))
+    out[('stat', FACTION_MISSIONS)] = faction_missions(save)
     settlements = data.settlements()
     locs = dict(save['locations'])
     for i in range(360):
@@ -79,7 +90,7 @@ def values(save):
     stats = dict(save['stats'])
     out = {}
     for k, d in stats.items():
-        if len(d) == 4 and (k in (DISCOVERED, RESOURCE_TOTAL, *RESOURCE.values(), *FACTION_ITEMS.values(), *FACTION_TOTALS)
+        if len(d) == 4 and (k in (DISCOVERED, FACTION_MISSIONS, SABOTAGE_TOTAL, RESOURCE_TOTAL, *RESOURCE.values(), *FACTION_ITEMS.values(), *FACTION_TOTALS)
                             or (TYPE_BASE < k <= TYPE_BASE + 3 * 31 and (k - TYPE_BASE) % 3 == 0)):
             out[('stat', k)] = u32(d)
     locs = dict(save['locations'])
@@ -104,14 +115,20 @@ def offsets(originals):
     return out
 
 
-def fixes(save, originals=()):
-    """{tally key: (now, should be)} for every tally that is short."""
+def fixes(save, originals=(), assume_complete=False):
+    """{tally key: (now, should be)} for every tally that is short. assume_complete also raises the tallies in COMPLETE:
+    for a save whose map shows everything ticked, on the player's word."""
     c, v, off = counted(save), values(save), offsets(originals)
     out = {}
     for k, now in v.items():
         should = c.get(k, 0) + off.get(k, 0)
         if should > now:
             out[k] = (now, should)
+    if assume_complete:
+        for stat, full in COMPLETE.items():
+            now = v[('stat', stat)] if ('stat', stat) in v else u32(dict(save['stats'])[stat])
+            if max(now, out.get(('stat', stat), (0, 0))[1]) < full:
+                out[('stat', stat)] = (now, full)
     return out
 
 
@@ -135,6 +152,7 @@ def apply(save, fx):
 def describe(fx):
     """Human-readable lines, grouped."""
     names = {DISCOVERED: 'locations discovered', RESOURCE_TOTAL: 'collectibles total', 336: 'faction items total',
+             FACTION_MISSIONS: 'faction missions', SABOTAGE_TOTAL: 'sabotage total', SETTLEMENTS_COMPLETE: 'settlements completed',
              370: 'faction items total (2)'}
     names.update({v: f'{k}s collected' for k, v in RESOURCE.items()})
     names.update({stat: {'csk': 'skulls', 'cbb': 'black boxes', 'cdd': 'drug drops'}[k] for k, stat in FACTION_ITEMS.items()})
